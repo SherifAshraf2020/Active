@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23J423" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="League" representedClassName="League" syncable="YES">
+        <attribute name="league_key" optional="YES" attributeType="String"/>
+        <attribute name="league_logo" optional="YES" attributeType="String"/>
+        <attribute name="league_name" optional="YES" attributeType="String"/>
+        <attribute name="sport_type" optional="YES" attributeType="String"/>
+    </entity>
+</model>
