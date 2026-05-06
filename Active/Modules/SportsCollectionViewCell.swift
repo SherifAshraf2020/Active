@@ -16,7 +16,7 @@ class SportsCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
             super.awakeFromNib()
             
-        self.contentView.backgroundColor = .red
+        self.contentView.backgroundColor = .darkGray
             self.contentView.layer.cornerRadius = 15
             self.contentView.clipsToBounds = true
             sportLabel.textColor = .white

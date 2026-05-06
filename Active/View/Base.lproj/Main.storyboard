@@ -34,34 +34,42 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="f8V-W6-zoR">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XBm-GH-5T2">
-                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="itemSize" width="158" height="130"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SportCell" id="gRt-PI-UbV" customClass="SportsCollectionViewCell" customModule="Active" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="158" height="130"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hId-x1-T41">
-                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="158" height="130"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wUM-8w-BeZ">
-                                                    <rect key="frame" x="14" y="8" width="101" height="69"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wUM-8w-BeZ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="158" height="93"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6vk-9E-S5Z">
-                                                    <rect key="frame" x="23" y="85" width="92" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6vk-9E-S5Z">
+                                                    <rect key="frame" x="58.333333333333329" y="101" width="41.333333333333329" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="6vk-9E-S5Z" firstAttribute="top" secondItem="wUM-8w-BeZ" secondAttribute="bottom" constant="8" id="2l3-1o-IDP"/>
+                                                <constraint firstItem="wUM-8w-BeZ" firstAttribute="top" secondItem="hId-x1-T41" secondAttribute="top" id="DEL-6X-Sc8"/>
+                                                <constraint firstItem="wUM-8w-BeZ" firstAttribute="leading" secondItem="hId-x1-T41" secondAttribute="leading" id="LNc-wh-1Qc"/>
+                                                <constraint firstAttribute="trailing" secondItem="wUM-8w-BeZ" secondAttribute="trailing" id="bN1-4k-ptS"/>
+                                                <constraint firstAttribute="bottom" secondItem="6vk-9E-S5Z" secondAttribute="bottom" constant="8" id="guJ-He-Vkt"/>
+                                                <constraint firstItem="6vk-9E-S5Z" firstAttribute="centerX" secondItem="hId-x1-T41" secondAttribute="centerX" id="hmi-T2-hlL"/>
+                                                <constraint firstItem="6vk-9E-S5Z" firstAttribute="centerY" secondItem="hId-x1-T41" secondAttribute="centerY" constant="46.5" id="rHs-6F-Akq"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <size key="customSize" width="158" height="130"/>
                                         <connections>
                                             <outlet property="sportImageView" destination="wUM-8w-BeZ" id="evG-ND-cOE"/>
                                             <outlet property="sportLabel" destination="6vk-9E-S5Z" id="u4Q-jw-lvw"/>
@@ -75,7 +83,7 @@
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gys-Ub-EIG"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="f8V-W6-zoR" firstAttribute="top" secondItem="gys-Ub-EIG" secondAttribute="top" id="BlD-iF-3P5"/>
                             <constraint firstItem="gys-Ub-EIG" firstAttribute="trailing" secondItem="f8V-W6-zoR" secondAttribute="trailing" id="OhC-GR-pbZ"/>
@@ -95,6 +103,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

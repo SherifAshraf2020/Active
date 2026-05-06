@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SportsViewController: UIViewController {
     
@@ -39,8 +40,15 @@ extension SportsViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let sport = sportsList[indexPath.row]
         cell.sportLabel.text = sport.strSport
         
-        cell.sportImageView.image = UIImage(named: "placeholder")
-        
+        if let url = URL(string: sport.strSportThumb) {
+                    cell.sportImageView.kf.setImage(
+                        with: url,
+                        placeholder: UIImage(named: "placeholder"),
+                        options: [
+                            .transition(.fade(0.4)),                         .cacheOriginalImage
+                        ]
+                    )
+                }
         return cell
     }
     
