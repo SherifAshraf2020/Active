@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BF76A5EF2FAB189100097F85 /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76A5EE2FAB189100097F85 /* Sport.swift */; };
+		BF76A5F12FAB1E2F00097F85 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76A5F02FAB1E2F00097F85 /* NetworkService.swift */; };
 		BFC6A0752FAA48330063CE2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0742FAA48330063CE2E /* AppDelegate.swift */; };
 		BFC6A0772FAA48330063CE2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0762FAA48330063CE2E /* SceneDelegate.swift */; };
 		BFC6A0792FAA48330063CE2E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0782FAA48330063CE2E /* ViewController.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		BF76A5EE2FAB189100097F85 /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
+		BF76A5F02FAB1E2F00097F85 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		BFC6A0712FAA48330063CE2E /* Active.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Active.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC6A0742FAA48330063CE2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFC6A0762FAA48330063CE2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		BF76A5ED2FAB184100097F85 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				BF76A5F02FAB1E2F00097F85 /* NetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 			files = (
 				BF76A5EF2FAB189100097F85 /* Sport.swift in Sources */,
 				BFC6A0792FAA48330063CE2E /* ViewController.swift in Sources */,
+				BF76A5F12FAB1E2F00097F85 /* NetworkService.swift in Sources */,
 				BFC6A0752FAA48330063CE2E /* AppDelegate.swift in Sources */,
 				BFC6A0772FAA48330063CE2E /* SceneDelegate.swift in Sources */,
 				BFC6A1242FAA58A20063CE2E /* League+CoreDataClass.swift in Sources */,
