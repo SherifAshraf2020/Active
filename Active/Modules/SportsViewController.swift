@@ -53,10 +53,18 @@ extension SportsViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let padding: CGFloat = 40
-        let side = (collectionView.frame.size.width - padding) / 2
-        return CGSize(width: 150, height: 150)
+        let padding: CGFloat = 20
+            let spacing: CGFloat = 15
+            
+            let availableWidth = collectionView.frame.width - (padding * 2) - spacing
+            let width = availableWidth / 2
+            
+            return CGSize(width: width, height: width * 1.1)
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//            return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+//        }
 }
 
 extension SportsViewController: SportsViewProtocol {
