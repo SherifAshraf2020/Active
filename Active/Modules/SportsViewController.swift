@@ -15,8 +15,15 @@ class SportsViewController: UIViewController {
     var sportsList: [Sport] = []
     var presenter: SportsPresenter!
     
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .gray
+        view.addSubview(activityIndicator)
         
         presenter = SportsPresenter(view: self)
         presenter.getSports()
@@ -77,9 +84,17 @@ extension SportsViewController: SportsViewProtocol {
         }
     }
     
-    func startLoading() {}
+    func startLoading() {
+        DispatchQueue.main.async {
+                    self.activityIndicator.startAnimating()
+                }
+    }
     
-    func stopLoading() {}
+    func stopLoading() {
+        DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                }
+    }
     
     func displayError(message: String) {
         print(message)
