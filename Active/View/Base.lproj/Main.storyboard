@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NGO-ah-Ppg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hSH-rD-hxL">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
@@ -22,7 +22,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="113.74045801526717" y="-27.464788732394368"/>
+            <point key="canvasLocation" x="-779" y="-768"/>
         </scene>
         <!--Sports View Controller-->
         <scene sceneID="v8X-G7-kz6">
@@ -33,13 +33,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explore leagues and live data across your favorite categories." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyE-Fv-cZ7">
-                                <rect key="frame" x="20" y="139" width="353" height="36"/>
+                                <rect key="frame" x="20" y="183" width="353" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="f8V-W6-zoR">
-                                <rect key="frame" x="0.0" y="195" width="393" height="623"/>
+                                <rect key="frame" x="0.0" y="239" width="393" height="530"/>
                                 <color key="backgroundColor" systemColor="systemGray4Color"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XBm-GH-5T2">
                                     <size key="itemSize" width="158" height="130"/>
@@ -110,13 +110,14 @@
                             <constraint firstItem="YyE-Fv-cZ7" firstAttribute="top" secondItem="gys-Ub-EIG" secondAttribute="top" constant="80" id="xTR-gp-rvL"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="ZAu-OB-kin"/>
                     <connections>
                         <outlet property="sportsCollectionView" destination="f8V-W6-zoR" id="uT9-AJ-otC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2xM-vy-BVN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="977.86259541984725" y="-27.464788732394368"/>
+            <point key="canvasLocation" x="1917" y="-27"/>
         </scene>
         <!--Leagues-->
         <scene sceneID="fxO-bW-zD6">
@@ -170,10 +171,95 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Agj-2r-mBT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1754" y="-34"/>
+            <point key="canvasLocation" x="3431" y="405"/>
+        </scene>
+        <!--Favorites View Controller-->
+        <scene sceneID="6eg-ti-r05">
+            <objects>
+                <viewController id="H3T-32-MuY" customClass="FavoritesViewController" customModule="Active" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JW2-A9-aod">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="jlp-dg-a0Y"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="eIm-oB-HVt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cob-PE-rRQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1975" y="929"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="7N6-Wr-Hs6">
+            <objects>
+                <tabBarController id="hSH-rD-hxL" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GOI-7o-yXA">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="AsA-HG-bHk" kind="relationship" relationship="viewControllers" id="GkH-vr-dce"/>
+                        <segue destination="XQK-tK-TbR" kind="relationship" relationship="viewControllers" id="qCB-YW-2If"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lh3-Jw-eDi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-703" y="405"/>
+        </scene>
+        <!--Sports-->
+        <scene sceneID="RGx-4K-f39">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AsA-HG-bHk" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Sports" image="sportscourt.fill" catalog="system" id="8Dn-W9-8aQ"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7ND-O3-TDI">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" systemColor="labelColor"/>
+                            <color key="textShadowColor" systemColor="labelColor"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" systemColor="labelColor"/>
+                            <color key="textShadowColor" systemColor="labelColor"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="NGO-ah-Ppg" kind="relationship" relationship="rootViewController" id="9Sx-wD-uy4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CHI-Ur-IYE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="977.86259541984725" y="-27.464788732394368"/>
+        </scene>
+        <!--Favorites-->
+        <scene sceneID="acm-xV-4bg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XQK-tK-TbR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Favorites" image="star.fill" catalog="system" id="igQ-Om-Jnk"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Sro-Hi-FLz">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="H3T-32-MuY" kind="relationship" relationship="rootViewController" id="SZi-SL-dZv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iu0-UK-Gq5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="978" y="929"/>
         </scene>
     </scenes>
     <resources>
+        <image name="sportscourt.fill" catalog="system" width="128" height="83"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
