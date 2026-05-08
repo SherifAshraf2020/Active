@@ -10,6 +10,9 @@ import UIKit
 class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var favoritesTableView: UITableView!
+    
+    var favoriteLeagues: [League] = []
+    
     override func viewDidLoad() {
             super.viewDidLoad()
             favoritesTableView.delegate = self
@@ -17,14 +20,37 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         }
 
     
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            favoriteLeagues = CoreDataManager.shared.fetchFavorites()
+            favoritesTableView.reloadData()
+        }
+    
+    
+    
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return 5
+            return favoriteLeagues.count
         }
 
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as! FavoriteTableViewCell
-            cell.leagueName?.text = "League Name"
+            
+            let league = favoriteLeagues[indexPath.row]
+            cell.leagueName?.text = league.league_name
+            
+            cell.deleteHandler = { [weak self] in
+                self?.handleDeleteAction(at: indexPath)
+            }
+            
             return cell
+        }
+    
+    
+    func handleDeleteAction(at indexPath: IndexPath) {
+            let leagueToDelete = favoriteLeagues[indexPath.row]
+            CoreDataManager.shared.deleteLeague(league: leagueToDelete)
+            favoriteLeagues.remove(at: indexPath.row)
+            favoritesTableView.deleteRows(at: [indexPath], with: .fade)
         }
     
 
