@@ -9,6 +9,11 @@ import UIKit
 
 class FavoriteTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var leagueLogo: UIImageView!
+    @IBOutlet weak var leagueName: UILabel!
+    
+    @IBAction func favButton(_ sender: UIButton) {
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
