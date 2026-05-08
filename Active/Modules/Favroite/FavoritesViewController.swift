@@ -19,10 +19,10 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             favoritesTableView.dataSource = self
         
         if CoreDataManager.shared.fetchFavorites().isEmpty {
-                CoreDataManager.shared.saveLeague(key: "1", name: "Premier League", logo: "premier_logo", sport: "Football")
-                CoreDataManager.shared.saveLeague(key: "2", name: "La Liga", logo: "laliga_logo", sport: "Football")
-                CoreDataManager.shared.saveLeague(key: "3", name: "Serie A", logo: "seriea_logo", sport: "Football")
-            }
+                    CoreDataManager.shared.saveLeague(key: "1", name: "Premier League", logo: "premier_logo", sport: "Football")
+                    CoreDataManager.shared.saveLeague(key: "2", name: "La Liga", logo: "laliga_logo", sport: "Football")
+                    CoreDataManager.shared.saveLeague(key: "3", name: "Serie A", logo: "seriea_logo", sport: "Football")
+                }
         }
 
     
@@ -39,25 +39,35 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as! FavoriteTableViewCell
-            
-            let league = favoriteLeagues[indexPath.row]
-            cell.leagueName?.text = league.league_name
-            
-            cell.deleteHandler = { [weak self] in
-                self?.handleDeleteAction(at: indexPath)
-            }
-            
-            return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as! FavoriteTableViewCell
+                
+                if indexPath.row < favoriteLeagues.count {
+                    let league = favoriteLeagues[indexPath.row]
+                    cell.leagueName?.text = league.league_name
+                    
+                    cell.deleteHandler = { [weak self] in
+                        if let currentIndexPath = self?.favoritesTableView.indexPath(for: cell) {
+                            self?.handleDeleteAction(at: currentIndexPath)
+                        }
+                    }
+                }
+                
+                return cell
         }
     
     
     func handleDeleteAction(at indexPath: IndexPath) {
-            let leagueToDelete = favoriteLeagues[indexPath.row]
-            CoreDataManager.shared.deleteLeague(league: leagueToDelete)
-            favoriteLeagues.remove(at: indexPath.row)
-            favoritesTableView.deleteRows(at: [indexPath], with: .fade)
-        }
+        guard indexPath.row < favoriteLeagues.count else { return }
+
+                let leagueToDelete = favoriteLeagues[indexPath.row]
+                
+                CoreDataManager.shared.deleteLeague(league: leagueToDelete)
+                
+                favoritesTableView.performBatchUpdates({
+                    self.favoriteLeagues.remove(at: indexPath.row)
+                    self.favoritesTableView.deleteRows(at: [indexPath], with: .fade)
+                }, completion: nil)
+            }
     
 
     /*
