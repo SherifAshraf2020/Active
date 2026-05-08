@@ -17,6 +17,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             super.viewDidLoad()
             favoritesTableView.delegate = self
             favoritesTableView.dataSource = self
+        
+        if CoreDataManager.shared.fetchFavorites().isEmpty {
+                CoreDataManager.shared.saveLeague(key: "1", name: "Premier League", logo: "premier_logo", sport: "Football")
+                CoreDataManager.shared.saveLeague(key: "2", name: "La Liga", logo: "laliga_logo", sport: "Football")
+                CoreDataManager.shared.saveLeague(key: "3", name: "Serie A", logo: "seriea_logo", sport: "Football")
+            }
         }
 
     
