@@ -17,7 +17,6 @@ protocol SportsViewProtocol: AnyObject {
 class SportsPresenter {
     
     private weak var view: SportsViewProtocol?
-    private let sportsURL = "https://www.thesportsdb.com/api/v1/json/3/all_sports.php"
     
     init(view: SportsViewProtocol) {
         self.view = view
@@ -26,7 +25,7 @@ class SportsPresenter {
     func getSports() {
         view?.startLoading()
         
-        NetworkService.shared.fetchData(urlString: sportsURL, type: SportResponse.self) { [weak self] result in
+        NetworkService.shared.fetchData(urlString: APIConstants.sportsBaseURL, type: SportResponse.self) { [weak self] result in
             self?.view?.stopLoading()
             
             switch result {
