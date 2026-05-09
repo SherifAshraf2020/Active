@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 protocol NetworkServiceProtocol {
     func fetchData<T: Decodable>(urlString: String, type: T.Type, completion: @escaping (Result<T, Error>) -> Void)
@@ -17,30 +18,15 @@ class NetworkService: NetworkServiceProtocol {
     private init() {}
     
     func fetchData<T: Decodable>(urlString: String, type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(NSError(domain: "", code: -2, userInfo: [NSLocalizedDescriptionKey: "No data"])))
-                return
-            }
-            
-            do {
-                let decodedData = try JSONDecoder().decode(T.self, from: data)
-                DispatchQueue.main.async {
+        AF.request(urlString)
+            .validate()
+            .responseDecodable(of: T.self) { response in
+                switch response.result {
+                case .success(let decodedData):
                     completion(.success(decodedData))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
-            } catch {
-                completion(.failure(error))
             }
-        }.resume()
     }
 }

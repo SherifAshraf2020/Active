@@ -20,6 +20,7 @@
 		BFAB9A162FAE4E52002580D2 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A132FAE3C4D002580D2 /* FavoriteTableViewCell.swift */; };
 		BFAB9A192FAE6ED6002580D2 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A182FAE6ED6002580D2 /* CoreDataManager.swift */; };
 		BFAB9A1B2FAF02CA002580D2 /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A1A2FAF02CA002580D2 /* FavoritesPresenter.swift */; };
+		BFAB9A1E2FAF3799002580D2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BFAB9A1D2FAF3799002580D2 /* Alamofire */; };
 		BFC6A0752FAA48330063CE2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0742FAA48330063CE2E /* AppDelegate.swift */; };
 		BFC6A0772FAA48330063CE2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0762FAA48330063CE2E /* SceneDelegate.swift */; };
 		BFC6A0792FAA48330063CE2E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0782FAA48330063CE2E /* ViewController.swift */; };
@@ -90,6 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFDE52692FABBC8B00C5CAA5 /* Kingfisher in Frameworks */,
+				BFAB9A1E2FAF3799002580D2 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +277,7 @@
 			name = Active;
 			packageProductDependencies = (
 				BFDE52682FABBC8B00C5CAA5 /* Kingfisher */,
+				BFAB9A1D2FAF3799002580D2 /* Alamofire */,
 			);
 			productName = Active;
 			productReference = BFC6A0712FAA48330063CE2E /* Active.app */;
@@ -775,6 +778,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BFAB9A1D2FAF3799002580D2 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BFAB9A1C2FAF35FC002580D2 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		BFDE52682FABBC8B00C5CAA5 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BFDE52662FABBC6B00C5CAA5 /* XCRemoteSwiftPackageReference "Kingfisher" */;
