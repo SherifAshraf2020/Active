@@ -7,77 +7,59 @@
 
 import UIKit
 
-class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FavoritesViewProtocol {
 
     @IBOutlet weak var favoritesTableView: UITableView!
     
     var favoriteLeagues: [League] = []
-    
-    override func viewDidLoad() {
+        var presenter: FavoritesPresenter!
+
+        override func viewDidLoad() {
             super.viewDidLoad()
+            
+            presenter = FavoritesPresenter(view: self)
+            
             favoritesTableView.delegate = self
             favoritesTableView.dataSource = self
-        
-        if CoreDataManager.shared.fetchFavorites().isEmpty {
-                    CoreDataManager.shared.saveLeague(key: "1", name: "Premier League", logo: "premier_logo", sport: "Football")
-                    CoreDataManager.shared.saveLeague(key: "2", name: "La Liga", logo: "laliga_logo", sport: "Football")
-                    CoreDataManager.shared.saveLeague(key: "3", name: "Serie A", logo: "seriea_logo", sport: "Football")
-                }
+            
+            if CoreDataManager.shared.fetchFavorites().isEmpty {
+                CoreDataManager.shared.saveLeague(key: "1", name: "Premier League", logo: "premier_logo", sport: "Football")
+                CoreDataManager.shared.saveLeague(key: "2", name: "La Liga", logo: "laliga_logo", sport: "Football")
+                CoreDataManager.shared.saveLeague(key: "3", name: "Serie A", logo: "seriea_logo", sport: "Football")
+            }
         }
 
-    
-    override func viewWillAppear(_ animated: Bool) {
+        override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
-            favoriteLeagues = CoreDataManager.shared.fetchFavorites()
-            favoritesTableView.reloadData()
+            presenter.getFavorites()
         }
-    
-    
-    
+
+        func showFavoriteLeagues(_ leagues: [League]) {
+            self.favoriteLeagues = leagues
+            self.favoritesTableView.isHidden = false
+            self.favoritesTableView.reloadData()
+        }
+
+        func showEmptyState() {
+            self.favoriteLeagues = []
+            self.favoritesTableView.isHidden = true
+        }
+
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return favoriteLeagues.count
         }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as! FavoriteTableViewCell
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as! FavoriteTableViewCell
+            
+            if indexPath.row < favoriteLeagues.count {
+                let league = favoriteLeagues[indexPath.row]
+                cell.leagueName?.text = league.league_name
                 
-                if indexPath.row < favoriteLeagues.count {
-                    let league = favoriteLeagues[indexPath.row]
-                    cell.leagueName?.text = league.league_name
-                    
-                    cell.deleteHandler = { [weak self] in
-                        if let currentIndexPath = self?.favoritesTableView.indexPath(for: cell) {
-                            self?.handleDeleteAction(at: currentIndexPath)
-                        }
-                    }
+                cell.deleteHandler = { [weak self] in
+                    self?.presenter.deleteFromFavorites(league: league)
                 }
-                
-                return cell
-        }
-    
-    
-    func handleDeleteAction(at indexPath: IndexPath) {
-        guard indexPath.row < favoriteLeagues.count else { return }
-
-                let leagueToDelete = favoriteLeagues[indexPath.row]
-                
-                CoreDataManager.shared.deleteLeague(league: leagueToDelete)
-                
-                favoritesTableView.performBatchUpdates({
-                    self.favoriteLeagues.remove(at: indexPath.row)
-                    self.favoritesTableView.deleteRows(at: [indexPath], with: .fade)
-                }, completion: nil)
             }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+            return cell
+        }
     }
-    */
-
-}
