@@ -108,6 +108,16 @@ extension SportsViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return cell
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let sport = sportsList[indexPath.row]
+        
+        if let leaguesVC = storyboard?.instantiateViewController(withIdentifier: "LeaguesTableViewController") as? LeaguesTableViewController {
+            leaguesVC.selectedSport = sport.strSport 
+            self.navigationController?.pushViewController(leaguesVC, animated: true)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let padding: CGFloat = 20
         let spacing: CGFloat = 15
