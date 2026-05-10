@@ -1,0 +1,225 @@
+//
+//  LeagueDetailsPresenter.swift
+//  Active
+//
+//  Created by Yomna on 10/05/2026.
+//
+
+import Foundation
+
+protocol LeagueDetailsPresenterProtocol {
+
+    func viewDidLoad()
+
+    func getUpcomingCount() -> Int
+
+    func getLatestCount() -> Int
+
+    func getTeamsCount() -> Int
+
+    func getUpcomingEvent(at index: Int) -> Event
+
+    func getLatestEvent(at index: Int) -> Event
+
+    func getTeam(at index: Int) -> Team
+}
+
+class LeagueDetailsPresenter: LeagueDetailsPresenterProtocol {
+
+    // MARK: - Properties
+
+    weak var view: LeagueDetailsViewProtocol?
+
+    private let networkService: NetworkServiceProtocol
+
+    private let leagueID: Int
+
+    private let apiKey = "YOUR_API_KEY"
+
+
+    // MARK: - Data
+
+    private var upcomingEvents: [Event] = []
+
+    private var latestEvents: [Event] = []
+
+    private var teams: [Team] = []
+
+
+    // MARK: - Init
+
+    init(
+        view: LeagueDetailsViewProtocol,
+        networkService: NetworkServiceProtocol = NetworkService.shared,
+        leagueID: Int
+    ) {
+
+        self.view = view
+
+        self.networkService = networkService
+
+        self.leagueID = leagueID
+    }
+
+
+    // MARK: - ViewDidLoad
+
+    func viewDidLoad() {
+
+        fetchFixtures()
+
+        fetchTeams()
+    }
+}
+
+
+// MARK: - Fetch Data
+
+extension LeagueDetailsPresenter {
+
+
+    private func fetchFixtures() {
+
+        let url =
+        "https://apiv2.allsportsapi.com/football/?met=Fixtures&leagueId=\(leagueID)&from=2026-04-01&to=2026-06-30&APIkey=\(APIConstants.apiKey)"
+
+        print(url)
+
+        networkService.fetchData(
+            urlString: url,
+            type: EventResponse.self
+        ) { [weak self] result in
+
+            switch result {
+
+            case .success(let response):
+
+                guard let self = self else { return }
+
+                let allFixtures = response.result ?? []
+
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+
+                let today = Date()
+
+                self.upcomingEvents = allFixtures.filter {
+
+                    guard let dateString = $0.event_date,
+                          let matchDate = formatter.date(from: dateString)
+                    else {
+                        return false
+                    }
+
+                    return matchDate >= today
+                }
+
+                self.latestEvents = allFixtures.filter {
+
+                    guard let dateString = $0.event_date,
+                          let matchDate = formatter.date(from: dateString)
+                    else {
+                        return false
+                    }
+
+                    return matchDate < today
+                }
+
+                print("Upcoming Count: \(self.upcomingEvents.count)")
+                print("Latest Count: \(self.latestEvents.count)")
+
+                DispatchQueue.main.async {
+                    self.view?.reloadData()
+                }
+
+
+            case .failure(let error):
+
+                DispatchQueue.main.async {
+                    self?.view?.showError(
+                        message: error.localizedDescription
+                    )
+                }
+            }
+        }
+    }
+
+
+    private func fetchTeams() {
+
+        let url =
+        "https://apiv2.allsportsapi.com/football/?met=Teams&leagueId=\(leagueID)&APIkey=\(APIConstants.apiKey)"
+
+        print(url)
+
+        networkService.fetchData(
+            urlString: url,
+            type: TeamResponse.self
+        ) { [weak self] result in
+
+            switch result {
+
+            case .success(let response):
+
+                self?.teams = response.result ?? []
+
+                print("Teams Count: \(self?.teams.count ?? 0)")
+
+                DispatchQueue.main.async {
+                    self?.view?.reloadData()
+                }
+
+
+            case .failure(let error):
+
+                DispatchQueue.main.async {
+                    self?.view?.showError(
+                        message: error.localizedDescription
+                    )
+                }
+            }
+        }
+    }
+}
+
+
+// MARK: - Counts
+
+extension LeagueDetailsPresenter {
+
+
+    func getUpcomingCount() -> Int {
+        return upcomingEvents.count
+    }
+
+
+    func getLatestCount() -> Int {
+        return latestEvents.count
+    }
+
+
+    func getTeamsCount() -> Int {
+        return teams.count
+    }
+}
+
+
+// MARK: - Get Items
+
+extension LeagueDetailsPresenter {
+
+
+    func getUpcomingEvent(at index: Int) -> Event {
+        return upcomingEvents[index]
+    }
+
+
+    func getLatestEvent(at index: Int) -> Event {
+        return latestEvents[index]
+    }
+
+
+    func getTeam(at index: Int) -> Team {
+        return teams[index]
+    }
+}
