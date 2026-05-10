@@ -39,9 +39,46 @@ class CoreDataManager {
         saveContext()
     }
     
+
+    
+    
+    
+    // MARK: - Team Operations
+        func fetchFavoriteTeams() -> [TeamEntity] {
+            let request: NSFetchRequest<TeamEntity> = TeamEntity.fetchRequest()
+            do {
+                return try context.fetch(request)
+            } catch {
+                return []
+            }
+        }
+        
+        func saveTeam(key: Int64, name: String, logo: String, sport: String) {
+            let team = TeamEntity(context: context)
+            team.team_key = key
+            team.team_name = name
+            team.team_logo = logo
+            team.sport_type = sport
+            
+            saveContext()
+        }
+        
+        func deleteTeam(team: TeamEntity) {
+            context.delete(team)
+            saveContext()
+        }
+        
+
+   // MARK: - Save Context
     func saveContext() {
         if context.hasChanges {
-            try? context.save()
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                print("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
         }
     }
+    
 }
