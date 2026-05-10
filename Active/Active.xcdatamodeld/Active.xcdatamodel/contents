@@ -6,7 +6,7 @@
         <attribute name="league_name" optional="YES" attributeType="String"/>
         <attribute name="sport_type" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="TeamEntity" representedClassName="TeamEntity" syncable="YES" codeGenerationType="class">
+    <entity name="TeamEntity" representedClassName="TeamEntity" syncable="YES">
         <attribute name="sport_type" optional="YES" attributeType="String"/>
         <attribute name="team_key" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="team_logo" optional="YES" attributeType="String"/>
