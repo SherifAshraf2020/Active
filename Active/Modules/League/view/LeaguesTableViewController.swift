@@ -27,8 +27,8 @@ UITableViewController {
 
     let indicator = UIActivityIndicatorView(style: .large)
 
-    var sportName: String = "football"
-
+    var selectedSport: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,7 +40,8 @@ UITableViewController {
 
         presenter?.attachView(self)
 
-        presenter?.getLeagues(for: sportName)
+        let nameToFetch = selectedSport?.lowercased() ?? "football"
+        presenter?.getLeagues(for: nameToFetch)
     }
 }
 
