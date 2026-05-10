@@ -181,9 +181,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="OYP-Oo-Cam">
+                                <rect key="frame" x="20" y="164" width="353" height="32"/>
+                                <segments>
+                                    <segment title="Leagues"/>
+                                    <segment title="Teams"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentChanged:" destination="H3T-32-MuY" eventType="valueChanged" id="ykB-Sw-bVo"/>
+                                </connections>
+                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Yo5-ei-VDB">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="205" width="393" height="564"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="564" id="RpX-DL-nld"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FavoriteCell" rowHeight="60" id="7bQ-lT-hmt" customClass="FavoriteTableViewCell" customModule="Active" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="60"/>
@@ -241,20 +254,23 @@
                         <viewLayoutGuide key="safeArea" id="jlp-dg-a0Y"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Yo5-ei-VDB" firstAttribute="centerX" secondItem="JW2-A9-aod" secondAttribute="centerX" id="F35-ar-Voq"/>
-                            <constraint firstItem="jlp-dg-a0Y" firstAttribute="bottom" secondItem="Yo5-ei-VDB" secondAttribute="bottom" id="Hky-51-KlS"/>
-                            <constraint firstItem="Yo5-ei-VDB" firstAttribute="top" secondItem="jlp-dg-a0Y" secondAttribute="top" id="yI8-mg-Pmu"/>
-                            <constraint firstItem="Yo5-ei-VDB" firstAttribute="leading" secondItem="jlp-dg-a0Y" secondAttribute="leading" id="yq9-0I-8RY"/>
+                            <constraint firstItem="OYP-Oo-Cam" firstAttribute="leading" secondItem="jlp-dg-a0Y" secondAttribute="leading" constant="20" id="5KO-e3-lLN"/>
+                            <constraint firstItem="jlp-dg-a0Y" firstAttribute="trailing" secondItem="OYP-Oo-Cam" secondAttribute="trailing" constant="20" id="8c4-02-BKS"/>
+                            <constraint firstItem="Yo5-ei-VDB" firstAttribute="top" secondItem="OYP-Oo-Cam" secondAttribute="bottom" constant="10" id="Epa-5W-esf"/>
+                            <constraint firstItem="Yo5-ei-VDB" firstAttribute="bottom" secondItem="jlp-dg-a0Y" secondAttribute="bottom" id="Pea-EO-1vU"/>
+                            <constraint firstItem="Yo5-ei-VDB" firstAttribute="leading" secondItem="JW2-A9-aod" secondAttribute="leading" id="axM-ci-izu"/>
+                            <constraint firstItem="Yo5-ei-VDB" firstAttribute="centerX" secondItem="OYP-Oo-Cam" secondAttribute="centerX" id="ddI-tP-ruE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eIm-oB-HVt"/>
                     <connections>
+                        <outlet property="favoriteSegmentControl" destination="OYP-Oo-Cam" id="IaV-H6-xF7"/>
                         <outlet property="favoritesTableView" destination="Yo5-ei-VDB" id="rey-0G-waG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cob-PE-rRQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1962.5954198473282" y="928.87323943661977"/>
+            <point key="canvasLocation" x="2106" y="929"/>
         </scene>
         <!--League Details View Controller-->
         <scene sceneID="ZlL-7v-YK7">

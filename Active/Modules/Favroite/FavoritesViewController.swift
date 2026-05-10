@@ -11,6 +11,11 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
 
     @IBOutlet weak var favoritesTableView: UITableView!
     
+    @IBOutlet weak var favoriteSegmentControl: UISegmentedControl!
+    
+    @IBAction func segmentChanged(_ sender: Any) {
+    }
+    
     var favoriteLeagues: [League] = []
     var presenter: FavoritesPresenter!
 
