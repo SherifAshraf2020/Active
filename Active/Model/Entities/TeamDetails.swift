@@ -12,6 +12,11 @@ struct TDTeamResponse: Codable {
     let result: [TDTeam]?
 }
 
+struct TDMatchResponse: Codable {
+    let success: Int?
+    let result: [TDMatch]?
+}
+
 struct TDTeam: Codable {
     let team_key: Int?
     let team_name: String?
@@ -20,6 +25,9 @@ struct TDTeam: Codable {
     let team_founded: String?
     let players: [TDPlayer]?
     let coaches: [TDCoach]?
+    
+    var lastMatches: [TDMatch]?
+    var nextMatches: [TDMatch]?
 }
 
 struct TDPlayer: Codable {
@@ -42,4 +50,14 @@ struct TDMatch: Codable {
     let away_team_logo: String?
     let event_date: String?
     let event_final_result: String?
+
+    init(event_key: Int? = nil, event_home_team: String? = nil, event_away_team: String? = nil, home_team_logo: String? = nil, away_team_logo: String? = nil, event_date: String? = nil, event_final_result: String? = nil) {
+        self.event_key = event_key
+        self.event_home_team = event_home_team
+        self.event_away_team = event_away_team
+        self.home_team_logo = home_team_logo
+        self.away_team_logo = away_team_logo
+        self.event_date = event_date
+        self.event_final_result = event_final_result
+    }
 }
