@@ -34,6 +34,7 @@
 		BFAB9A1B2FAF02CA002580D2 /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A1A2FAF02CA002580D2 /* FavoritesPresenter.swift */; };
 		BFAB9A1E2FAF3799002580D2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BFAB9A1D2FAF3799002580D2 /* Alamofire */; };
 		BFAB9A202FAF3B01002580D2 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A1F2FAF3B01002580D2 /* APIConstants.swift */; };
+		BFBE7CD42FB229430045B51B /* TeamDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE7CD32FB229430045B51B /* TeamDetails.swift */; };
 		BFC6A0752FAA48330063CE2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0742FAA48330063CE2E /* AppDelegate.swift */; };
 		BFC6A0772FAA48330063CE2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0762FAA48330063CE2E /* SceneDelegate.swift */; };
 		BFC6A0792FAA48330063CE2E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0782FAA48330063CE2E /* ViewController.swift */; };
@@ -93,6 +94,7 @@
 		BFAB9A182FAE6ED6002580D2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		BFAB9A1A2FAF02CA002580D2 /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		BFAB9A1F2FAF3B01002580D2 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
+		BFBE7CD32FB229430045B51B /* TeamDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetails.swift; sourceTree = "<group>"; };
 		BFC6A0712FAA48330063CE2E /* Active.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Active.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC6A0742FAA48330063CE2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFC6A0762FAA48330063CE2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				6F28C8BE2FB0B78000700E38 /* Event.swift */,
 				6F28C8C02FB0B79E00700E38 /* Team.swift */,
 				BF8310232FB174DE00FB6D22 /* OnboardingSlide.swift */,
+				BFBE7CD32FB229430045B51B /* TeamDetails.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				BF8310262FB17C8400FB6D22 /* OnboardingService.swift in Sources */,
 				6F4A8ACC2FACE40E0020060F /* League.swift in Sources */,
 				BF83102F2FB17F0E00FB6D22 /* OnBoardingViewController.swift in Sources */,
+				BFBE7CD42FB229430045B51B /* TeamDetails.swift in Sources */,
 				6F28C8C32FB0BCB400700E38 /* CustomCells.swift in Sources */,
 				BF8310292FB17D8100FB6D22 /* OnboardingPresenter.swift in Sources */,
 				6F28C8BB2FB0B42B00700E38 /* LeagueDetailsViewController.swift in Sources */,
