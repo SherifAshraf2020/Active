@@ -96,7 +96,7 @@ extension TeamDetailsViewController: UITableViewDataSource {
         case .lastResults:
             return min(team.lastMatches?.count ?? 0, 3)
         case .upcomingMatches:
-            return min(team.nextMatches?.count ?? 0, 5) 
+            return min(team.nextMatches?.count ?? 0, 5)
         default: return 0
         }
     }
@@ -133,7 +133,7 @@ extension TeamDetailsViewController: UITableViewDataSource {
             
         case .upcomingMatches:
             let cell = tableView.dequeueReusableCell(withIdentifier: "MatchCell", for: indexPath) as! MatchCell
-            // تعديل السطر ده لاستخدام nextMatches
+
             if let match = teamData?.nextMatches?[indexPath.row] {
                 let home = match.event_home_team ?? ""
                 let away = match.event_away_team ?? ""
