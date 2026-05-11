@@ -69,8 +69,7 @@ class OnBoardingViewController: UIPageViewController {
                 updateButtonTitle()
             }
         } else {
-           
-            print("Finished Onboarding!")
+            presenter.finishOnboarding()
         }
     }
     
@@ -98,6 +97,15 @@ extension OnBoardingViewController: OnboardingViewProtocol {
             setViewControllers([firstVC], direction: .forward, animated: true)
         }
     }
+    
+    
+    func navigateToHome() {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let mainVC = storyboard.instantiateInitialViewController() {
+                mainVC.modalPresentationStyle = .fullScreen
+                present(mainVC, animated: true)
+            }
+        }
 }
 
 // MARK: - PageView DataSource & Delegate

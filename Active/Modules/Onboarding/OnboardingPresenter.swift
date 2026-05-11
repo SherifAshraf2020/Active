@@ -9,6 +9,7 @@ import Foundation
 
 protocol OnboardingViewProtocol: AnyObject {
     func showSlides(_ slides: [OnboardingSlide])
+    func navigateToHome()
 }
 
 class OnboardingPresenter {
@@ -23,4 +24,9 @@ class OnboardingPresenter {
         let slides = OnboardingService.getOnboardingSlides()
         view?.showSlides(slides)
     }
+    
+    func finishOnboarding() {
+            UserDefaults.standard.set(true, forKey: "onboardingDone")
+            view?.navigateToHome()
+        }
 }
