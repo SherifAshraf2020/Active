@@ -12,23 +12,19 @@ class TeamDetailsService {
     static let shared = TeamDetailsService()
     private init() {}
     
-    /// Fetches team details using the Generic NetworkService
-    /// - Parameters:
-    ///   - teamId: The ID of the team
-    ///   - completion: Result containing TDTeamResponse or Error
     func getTeamDetails(teamId: Int, completion: @escaping (Result<TDTeamResponse, Error>) -> Void) {
-        
-        // 1. Construct the URL using your APIConstants style
         let urlString = "\(APIConstants.leaguesBaseURL)football/?met=Teams&teamId=\(teamId)&APIkey=\(APIConstants.apiKey)"
-        
-        // 2. Use your existing Generic NetworkService
         NetworkService.shared.fetchData(urlString: urlString, type: TDTeamResponse.self) { result in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
-            }
+            completion(result)
+        }
+    }
+    
+    func getTeamMatches(teamId: Int, completion: @escaping (Result<TDMatchResponse, Error>) -> Void) {
+        let urlString = "\(APIConstants.leaguesBaseURL)football/?met=Fixtures&teamId=\(teamId)&from=2025-01-01&to=2026-12-31&APIkey=\(APIConstants.apiKey)"
+        
+        NetworkService.shared.fetchData(urlString: urlString, type: TDMatchResponse.self) { result in
+            completion(result)
         }
     }
 }
+
