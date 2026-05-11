@@ -25,6 +25,7 @@
 		BF830FDC2FB14E2F00FB6D22 /* TeamEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF830FDA2FB14E2F00FB6D22 /* TeamEntity+CoreDataClass.swift */; };
 		BF830FDD2FB14E2F00FB6D22 /* TeamEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF830FDB2FB14E2F00FB6D22 /* TeamEntity+CoreDataProperties.swift */; };
 		BF8310242FB174DE00FB6D22 /* OnboardingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8310232FB174DE00FB6D22 /* OnboardingSlide.swift */; };
+		BF8310262FB17C8400FB6D22 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8310252FB17C8400FB6D22 /* OnboardingService.swift */; };
 		BFAB9A162FAE4E52002580D2 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A132FAE3C4D002580D2 /* FavoriteTableViewCell.swift */; };
 		BFAB9A192FAE6ED6002580D2 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A182FAE6ED6002580D2 /* CoreDataManager.swift */; };
 		BFAB9A1B2FAF02CA002580D2 /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A1A2FAF02CA002580D2 /* FavoritesPresenter.swift */; };
@@ -81,6 +82,7 @@
 		BF830FDA2FB14E2F00FB6D22 /* TeamEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BF830FDB2FB14E2F00FB6D22 /* TeamEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BF8310232FB174DE00FB6D22 /* OnboardingSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
+		BF8310252FB17C8400FB6D22 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
 		BFAB9A132FAE3C4D002580D2 /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		BFAB9A182FAE6ED6002580D2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		BFAB9A1A2FAF02CA002580D2 /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			children = (
 				BF76A5F02FAB1E2F00097F85 /* NetworkService.swift */,
 				BFAB9A1F2FAF3B01002580D2 /* APIConstants.swift */,
+				BF8310252FB17C8400FB6D22 /* OnboardingService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				BF76A5F52FAB270A00097F85 /* SportsViewController.swift in Sources */,
 				BFAB9A202FAF3B01002580D2 /* APIConstants.swift in Sources */,
 				BFC6A1252FAA58A20063CE2E /* League+CoreDataProperties.swift in Sources */,
+				BF8310262FB17C8400FB6D22 /* OnboardingService.swift in Sources */,
 				6F4A8ACC2FACE40E0020060F /* League.swift in Sources */,
 				6F28C8C32FB0BCB400700E38 /* CustomCells.swift in Sources */,
 				6F28C8BB2FB0B42B00700E38 /* LeagueDetailsViewController.swift in Sources */,
