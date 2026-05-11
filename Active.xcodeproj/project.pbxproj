@@ -36,6 +36,7 @@
 		BFAB9A202FAF3B01002580D2 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A1F2FAF3B01002580D2 /* APIConstants.swift */; };
 		BFBE7CD42FB229430045B51B /* TeamDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE7CD32FB229430045B51B /* TeamDetails.swift */; };
 		BFBE7CD62FB22DC60045B51B /* TeamDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE7CD52FB22DC60045B51B /* TeamDetailsService.swift */; };
+		BFBE7CD92FB22EBA0045B51B /* TeamDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE7CD82FB22EBA0045B51B /* TeamDetailsPresenter.swift */; };
 		BFC6A0752FAA48330063CE2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0742FAA48330063CE2E /* AppDelegate.swift */; };
 		BFC6A0772FAA48330063CE2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0762FAA48330063CE2E /* SceneDelegate.swift */; };
 		BFC6A0792FAA48330063CE2E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6A0782FAA48330063CE2E /* ViewController.swift */; };
@@ -97,6 +98,7 @@
 		BFAB9A1F2FAF3B01002580D2 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		BFBE7CD32FB229430045B51B /* TeamDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetails.swift; sourceTree = "<group>"; };
 		BFBE7CD52FB22DC60045B51B /* TeamDetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsService.swift; sourceTree = "<group>"; };
+		BFBE7CD82FB22EBA0045B51B /* TeamDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsPresenter.swift; sourceTree = "<group>"; };
 		BFC6A0712FAA48330063CE2E /* Active.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Active.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC6A0742FAA48330063CE2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFC6A0762FAA48330063CE2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		BF76A5F32FAB26C000097F85 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				BFBE7CD72FB22E990045B51B /* TeamDetails */,
 				BF8310272FB17D5600FB6D22 /* Onboarding */,
 				BF12503B2FAD623E00F73279 /* Favroite */,
 				BF1250372FACFBDE00F73279 /* League */,
@@ -245,6 +248,14 @@
 				BFAB9A182FAE6ED6002580D2 /* CoreDataManager.swift */,
 			);
 			path = DataSource;
+			sourceTree = "<group>";
+		};
+		BFBE7CD72FB22E990045B51B /* TeamDetails */ = {
+			isa = PBXGroup;
+			children = (
+				BFBE7CD82FB22EBA0045B51B /* TeamDetailsPresenter.swift */,
+			);
+			path = TeamDetails;
 			sourceTree = "<group>";
 		};
 		BFC6A0682FAA48330063CE2E = {
@@ -453,6 +464,7 @@
 			files = (
 				BF8310242FB174DE00FB6D22 /* OnboardingSlide.swift in Sources */,
 				BF830FDC2FB14E2F00FB6D22 /* TeamEntity+CoreDataClass.swift in Sources */,
+				BFBE7CD92FB22EBA0045B51B /* TeamDetailsPresenter.swift in Sources */,
 				BF830FDD2FB14E2F00FB6D22 /* TeamEntity+CoreDataProperties.swift in Sources */,
 				BF83102D2FB17E5300FB6D22 /* SlideViewController.swift in Sources */,
 				BF76A5EF2FAB189100097F85 /* Sport.swift in Sources */,
