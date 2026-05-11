@@ -15,23 +15,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let window = UIWindow(windowScene: windowScene)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        window = UIWindow(windowScene: windowScene)
+        let onboardingDone = UserDefaults.standard.bool(forKey: "onboardingDone")
         
-        // 1. بننادي على الشاشة بالـ ID اللي إنت لسه ضايفه
-        if let detailsVC = storyboard.instantiateViewController(withIdentifier: "TeamDetailsViewController") as? TeamDetailsViewController {
-            
-            // 2. بنعمل الـ Presenter يدوي وبنحقنه جوه الـ VC
-            let presenter = TeamDetailsPresenter(view: detailsVC, teamId: 20) // حط ID فريق موجود فعلاً
-            detailsVC.presenter = presenter
-            
-            // 3. بنحطها جوه NavigationController عشان الـ UI يبان مظبوط
-            let nav = UINavigationController(rootViewController: detailsVC)
-            window.rootViewController = nav
+        if onboardingDone {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            window?.rootViewController = storyboard.instantiateInitialViewController()
+        } else {
+            let layout = UIPageViewController.TransitionStyle.scroll
+            let onboardingVC = OnBoardingViewController(transitionStyle: layout, navigationOrientation: .horizontal, options: nil)
+            window?.rootViewController = onboardingVC
         }
         
-        self.window = window
-        window.makeKeyAndVisible()
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
