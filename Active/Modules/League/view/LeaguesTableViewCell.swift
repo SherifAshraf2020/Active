@@ -10,11 +10,34 @@ import UIKit
 class LeaguesTableViewCell: UITableViewCell {
 
    
+    @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var leagueNameLabel: UILabel!
     @IBOutlet weak var leagueImageView: UIImageView!
+    var favoriteButtonAction: (() -> Void)?
+    private var isFavorite = false
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+  
+    @IBAction func favoriteButtonTapped(_ sender: UIButton) {
+        func configureFavoriteButton(
+            isFavorite: Bool
+        ) {
+
+            self.isFavorite = isFavorite
+
+            let imageName =
+            isFavorite ? "heart.fill" : "heart"
+
+            favoriteButton.setImage(
+                UIImage(systemName: imageName),
+                for: .normal
+            )
+
+            favoriteButton.tintColor = .systemRed
+        }
+        favoriteButtonAction?()
     }
     override func layoutSubviews() {
           super.layoutSubviews()
@@ -29,5 +52,20 @@ class LeaguesTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    func configureFavoriteButton(
+        isFavorite: Bool
+    ) {
 
+        self.isFavorite = isFavorite
+
+        let imageName =
+        isFavorite ? "heart.fill" : "heart"
+
+        favoriteButton.setImage(
+            UIImage(systemName: imageName),
+            for: .normal
+        )
+
+        favoriteButton.tintColor = .systemRed
+    }
 }
