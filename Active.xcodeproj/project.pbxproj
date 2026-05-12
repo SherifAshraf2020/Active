@@ -34,6 +34,7 @@
 		BFAB9A1B2FAF02CA002580D2 /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A1A2FAF02CA002580D2 /* FavoritesPresenter.swift */; };
 		BFAB9A1E2FAF3799002580D2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BFAB9A1D2FAF3799002580D2 /* Alamofire */; };
 		BFAB9A202FAF3B01002580D2 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB9A1F2FAF3B01002580D2 /* APIConstants.swift */; };
+		BFB057DB2FB39CA00016716A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB057DA2FB39CA00016716A /* NetworkServiceTests.swift */; };
 		BFBE7CD42FB229430045B51B /* TeamDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE7CD32FB229430045B51B /* TeamDetails.swift */; };
 		BFBE7CD62FB22DC60045B51B /* TeamDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE7CD52FB22DC60045B51B /* TeamDetailsService.swift */; };
 		BFBE7CD92FB22EBA0045B51B /* TeamDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE7CD82FB22EBA0045B51B /* TeamDetailsPresenter.swift */; };
@@ -100,6 +101,7 @@
 		BFAB9A182FAE6ED6002580D2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		BFAB9A1A2FAF02CA002580D2 /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		BFAB9A1F2FAF3B01002580D2 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
+		BFB057DA2FB39CA00016716A /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		BFBE7CD32FB229430045B51B /* TeamDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetails.swift; sourceTree = "<group>"; };
 		BFBE7CD52FB22DC60045B51B /* TeamDetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsService.swift; sourceTree = "<group>"; };
 		BFBE7CD82FB22EBA0045B51B /* TeamDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsPresenter.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				BFC6A08E2FAA48480063CE2E /* ActiveTests.swift */,
+				BFB057DA2FB39CA00016716A /* NetworkServiceTests.swift */,
 			);
 			path = ActiveTests;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFB057DB2FB39CA00016716A /* NetworkServiceTests.swift in Sources */,
 				BFC6A08F2FAA48480063CE2E /* ActiveTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
