@@ -34,8 +34,6 @@ class LeagueDetailsPresenter: LeagueDetailsPresenterProtocol {
 
     private let leagueID: Int
 
-    private let apiKey = "YOUR_API_KEY"
-
 
     // MARK: - Data
 
@@ -66,9 +64,20 @@ class LeagueDetailsPresenter: LeagueDetailsPresenterProtocol {
 
     func viewDidLoad() {
 
-        fetchFixtures()
+        view?.startLoading()
 
-        fetchTeams()
+        let group = DispatchGroup()
+
+        group.enter()
+        fetchFixtures(group: group)
+
+        group.enter()
+        fetchTeams(group: group)
+
+        group.notify(queue: .main) {
+            self.view?.reloadData()
+            self.view?.stopLoading()
+        }
     }
 }
 
@@ -78,7 +87,9 @@ class LeagueDetailsPresenter: LeagueDetailsPresenterProtocol {
 extension LeagueDetailsPresenter {
 
 
-    private func fetchFixtures() {
+    private func fetchFixtures(
+        group: DispatchGroup
+    ) {
 
         let url =
         "https://apiv2.allsportsapi.com/football/?met=Fixtures&leagueId=\(leagueID)&from=2026-04-01&to=2026-06-30&APIkey=\(APIConstants.apiKey)"
@@ -94,11 +105,15 @@ extension LeagueDetailsPresenter {
 
             case .success(let response):
 
-                guard let self = self else { return }
+                guard let self = self else {
+                    group.leave()
+                    return
+                }
 
                 let allFixtures = response.result ?? []
 
                 let formatter = DateFormatter()
+
                 formatter.dateFormat = "yyyy-MM-dd"
 
                 let today = Date()
@@ -106,7 +121,9 @@ extension LeagueDetailsPresenter {
                 self.upcomingEvents = allFixtures.filter {
 
                     guard let dateString = $0.event_date,
-                          let matchDate = formatter.date(from: dateString)
+                          let matchDate = formatter.date(
+                            from: dateString
+                          )
                     else {
                         return false
                     }
@@ -117,7 +134,9 @@ extension LeagueDetailsPresenter {
                 self.latestEvents = allFixtures.filter {
 
                     guard let dateString = $0.event_date,
-                          let matchDate = formatter.date(from: dateString)
+                          let matchDate = formatter.date(
+                            from: dateString
+                          )
                     else {
                         return false
                     }
@@ -125,27 +144,36 @@ extension LeagueDetailsPresenter {
                     return matchDate < today
                 }
 
-                print("Upcoming Count: \(self.upcomingEvents.count)")
-                print("Latest Count: \(self.latestEvents.count)")
+                print(
+                    "Upcoming Count: \(self.upcomingEvents.count)"
+                )
 
-                DispatchQueue.main.async {
-                    self.view?.reloadData()
-                }
+                print(
+                    "Latest Count: \(self.latestEvents.count)"
+                )
+
+
+                group.leave()
 
 
             case .failure(let error):
 
                 DispatchQueue.main.async {
+
                     self?.view?.showError(
                         message: error.localizedDescription
                     )
                 }
+
+                group.leave()
             }
         }
     }
 
 
-    private func fetchTeams() {
+    private func fetchTeams(
+        group: DispatchGroup
+    ) {
 
         let url =
         "https://apiv2.allsportsapi.com/football/?met=Teams&leagueId=\(leagueID)&APIkey=\(APIConstants.apiKey)"
@@ -163,20 +191,25 @@ extension LeagueDetailsPresenter {
 
                 self?.teams = response.result ?? []
 
-                print("Teams Count: \(self?.teams.count ?? 0)")
+                print(
+                    "Teams Count: \(self?.teams.count ?? 0)"
+                )
 
-                DispatchQueue.main.async {
-                    self?.view?.reloadData()
-                }
+            
+
+                group.leave()
 
 
             case .failure(let error):
 
                 DispatchQueue.main.async {
+
                     self?.view?.showError(
                         message: error.localizedDescription
                     )
                 }
+
+                group.leave()
             }
         }
     }
@@ -189,16 +222,19 @@ extension LeagueDetailsPresenter {
 
 
     func getUpcomingCount() -> Int {
+
         return upcomingEvents.count
     }
 
 
     func getLatestCount() -> Int {
+
         return latestEvents.count
     }
 
 
     func getTeamsCount() -> Int {
+
         return teams.count
     }
 }
@@ -209,17 +245,26 @@ extension LeagueDetailsPresenter {
 extension LeagueDetailsPresenter {
 
 
-    func getUpcomingEvent(at index: Int) -> Event {
+    func getUpcomingEvent(
+        at index: Int
+    ) -> Event {
+
         return upcomingEvents[index]
     }
 
 
-    func getLatestEvent(at index: Int) -> Event {
+    func getLatestEvent(
+        at index: Int
+    ) -> Event {
+
         return latestEvents[index]
     }
 
 
-    func getTeam(at index: Int) -> Team {
+    func getTeam(
+        at index: Int
+    ) -> Team {
+
         return teams[index]
     }
 }

@@ -124,7 +124,15 @@ extension LeaguesTableViewController {
 
         cell.leagueNameLabel.text =
         league?.leagueName
+        
+        cell.favoriteButtonAction = {
 
+            guard let league = league else {
+                return
+            }
+
+            print("Add \(league.leagueName ?? "") To Favorites")
+        }
         if let imageString = league?.leagueLogo,
            let url = URL(string: imageString) {
 
@@ -134,5 +142,38 @@ extension LeaguesTableViewController {
         }
 
         return cell
+    }
+    override func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+
+        guard let selectedLeague =
+                presenter?.getLeague(at: indexPath.row)
+        else {
+            return
+        }
+
+        let storyboard = UIStoryboard(
+            name: "Main",
+            bundle: nil
+        )
+
+        let detailsVC =
+        storyboard.instantiateViewController(
+            withIdentifier: "LeagueDetailsViewController"
+        ) as! LeagueDetailsViewController
+
+        
+        // PASS LEAGUE ID
+        
+        detailsVC.leagueID =
+        selectedLeague.leagueKey ?? 0
+
+        
+        navigationController?.pushViewController(
+            detailsVC,
+            animated: true
+        )
     }
 }

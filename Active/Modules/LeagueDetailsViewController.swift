@@ -13,6 +13,10 @@ protocol LeagueDetailsViewProtocol: AnyObject {
     func reloadData()
     
     func showError(message: String)
+    
+    func startLoading()
+
+    func stopLoading()
 }
 
 class LeagueDetailsViewController: UIViewController {
@@ -30,7 +34,27 @@ class LeagueDetailsViewController: UIViewController {
     
     var leagueID: Int = 152
     
+    let indicator = UIActivityIndicatorView(style: .large)
     
+    private let emptyLabel: UILabel = {
+
+        let label = UILabel()
+
+        label.text = "No Data Available"
+
+        label.textAlignment = .center
+
+        label.font = .systemFont(
+            ofSize: 22,
+            weight: .semibold
+        )
+
+        label.textColor = .secondaryLabel
+
+        label.isHidden = true
+
+        return label
+    }()
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -45,6 +69,20 @@ class LeagueDetailsViewController: UIViewController {
         setupFavoriteButton()
         
         presenter.viewDidLoad()
+        view.addSubview(emptyLabel)
+
+        emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+
+            emptyLabel.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor
+            ),
+
+            emptyLabel.centerYAnchor.constraint(
+                equalTo: view.centerYAnchor
+            )
+        ])
     }
 }
 
@@ -485,12 +523,35 @@ UICollectionViewDelegate {
 
 extension LeagueDetailsViewController:
 LeagueDetailsViewProtocol {
+    func startLoading() {
+        
+        indicator.center = view.center
+        
+        view.addSubview(indicator)
+        
+        indicator.startAnimating()
+    }
+    
+    func stopLoading() {
+        
+        indicator.stopAnimating()
+        
+        indicator.removeFromSuperview()
+    }
     
     
     func reloadData() {
-        
+
         DispatchQueue.main.async {
+
             self.collectionView.reloadData()
+
+            let totalItems =
+            self.presenter.getUpcomingCount() +
+            self.presenter.getLatestCount() +
+            self.presenter.getTeamsCount()
+
+            self.emptyLabel.isHidden = totalItems != 0
         }
     }
     
