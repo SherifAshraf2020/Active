@@ -23,17 +23,18 @@ class SportsPresenter {
     }
     
     func getSports() {
-        view?.startLoading()
-        
-        NetworkService.shared.fetchData(urlString: APIConstants.sportsBaseURL, type: SportResponse.self) { [weak self] result in
-            self?.view?.stopLoading()
+            view?.startLoading()
             
-            switch result {
-            case .success(let response):
-                self?.view?.displaySports(response.sports)
-            case .failure(let error):
-                self?.view?.displayError(message: error.localizedDescription)
+            let staticSports = [
+                Sport(idSport: "102", strSport: "Football", strSportThumb: "https://www.thesportsdb.com/images/sports/soccer.jpg"),
+                Sport(idSport: "103", strSport: "Basketball", strSportThumb: "https://www.thesportsdb.com/images/sports/basketball.jpg"),
+                Sport(idSport: "104", strSport: "Tennis", strSportThumb: "https://www.thesportsdb.com/images/sports/tennis.jpg"),
+                Sport(idSport: "115", strSport: "Cricket", strSportThumb: "https://www.thesportsdb.com/images/sports/cricket.jpg")
+            ]
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.view?.stopLoading()
+                self?.view?.displaySports(staticSports)
             }
         }
-    }
 }

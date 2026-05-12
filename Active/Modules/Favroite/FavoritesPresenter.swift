@@ -8,28 +8,35 @@
 import Foundation
 
 protocol FavoritesViewProtocol: AnyObject {
-    func showFavoriteLeagues(_ leagues: [League])
+    func showFavorites(leagues: [League]?, teams: [TeamEntity]?, isLeague: Bool)
     func showEmptyState()
 }
 
 class FavoritesPresenter {
     weak var view: FavoritesViewProtocol?
+    var currentSegmentIndex = 0 // 0 for Leagues, 1 for Teams
     
     init(view: FavoritesViewProtocol) {
         self.view = view
     }
     
     func getFavorites() {
-        let leagues = CoreDataManager.shared.fetchFavorites()
-        if leagues.isEmpty {
-            view?.showEmptyState()
+        if currentSegmentIndex == 0 {
+            let leagues = CoreDataManager.shared.fetchFavorites()
+            leagues.isEmpty ? view?.showEmptyState() : view?.showFavorites(leagues: leagues, teams: nil, isLeague: true)
         } else {
-            view?.showFavoriteLeagues(leagues)
+            let teams = CoreDataManager.shared.fetchFavoriteTeams()
+            teams.isEmpty ? view?.showEmptyState() : view?.showFavorites(leagues: nil, teams: teams, isLeague: false)
         }
     }
     
-    func deleteFromFavorites(league: League) {
+    func deleteLeague(league: League) {
         CoreDataManager.shared.deleteLeague(league: league)
+        getFavorites()
+    }
+
+    func deleteTeam(team: TeamEntity) {
+        CoreDataManager.shared.deleteTeam(team: team)
         getFavorites()
     }
 }
