@@ -32,15 +32,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explore leagues and live data across your favorite categories." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyE-Fv-cZ7">
-                                <rect key="frame" x="20" y="252" width="353" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="f8V-W6-zoR">
                                 <rect key="frame" x="0.0" y="308" width="393" height="427"/>
-                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="XBm-GH-5T2">
                                     <size key="itemSize" width="0.0" height="0.0"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -87,27 +81,22 @@
                                     <outlet property="delegate" destination="Pnq-yV-H7T" id="lnj-d7-N3Q"/>
                                 </connections>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explore leagues and live data across your favorite categories." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyE-Fv-cZ7">
+                                <rect key="frame" x="24" y="164" width="345" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gys-Ub-EIG"/>
-                        <color key="backgroundColor" systemColor="systemGray4Color"/>
                         <constraints>
-                            <constraint firstItem="gys-Ub-EIG" firstAttribute="trailing" secondItem="YyE-Fv-cZ7" secondAttribute="trailing" constant="20" id="1bF-WY-5EW"/>
-                            <constraint firstItem="YyE-Fv-cZ7" firstAttribute="leading" secondItem="gys-Ub-EIG" secondAttribute="leading" constant="20" id="2p5-VG-5CW"/>
-                            <constraint firstAttribute="trailing" secondItem="YyE-Fv-cZ7" secondAttribute="trailing" constant="20" id="3xU-n9-dbd"/>
-                            <constraint firstItem="YyE-Fv-cZ7" firstAttribute="leading" secondItem="gys-Ub-EIG" secondAttribute="leading" constant="20" id="6A4-L5-SAY"/>
-                            <constraint firstItem="gys-Ub-EIG" firstAttribute="trailing" secondItem="YyE-Fv-cZ7" secondAttribute="trailing" constant="20" id="Ge4-Us-go6"/>
-                            <constraint firstItem="YyE-Fv-cZ7" firstAttribute="leading" secondItem="gys-Ub-EIG" secondAttribute="leading" constant="20" id="NOV-NH-bJc"/>
-                            <constraint firstItem="f8V-W6-zoR" firstAttribute="top" secondItem="YyE-Fv-cZ7" secondAttribute="bottom" constant="20" id="NyD-Qh-BJb"/>
+                            <constraint firstItem="f8V-W6-zoR" firstAttribute="top" secondItem="gys-Ub-EIG" secondAttribute="top" constant="136" id="8jy-T7-ftc"/>
                             <constraint firstItem="gys-Ub-EIG" firstAttribute="trailing" secondItem="f8V-W6-zoR" secondAttribute="trailing" id="OhC-GR-pbZ"/>
-                            <constraint firstItem="f8V-W6-zoR" firstAttribute="top" secondItem="YyE-Fv-cZ7" secondAttribute="bottom" constant="20" id="SGs-Wy-msT"/>
-                            <constraint firstItem="YyE-Fv-cZ7" firstAttribute="leading" secondItem="gys-Ub-EIG" secondAttribute="leading" constant="20" id="b4f-RT-syS"/>
-                            <constraint firstItem="YyE-Fv-cZ7" firstAttribute="leading" secondItem="gys-Ub-EIG" secondAttribute="leading" constant="20" id="fyA-vL-7rQ"/>
+                            <constraint firstItem="YyE-Fv-cZ7" firstAttribute="leading" secondItem="gys-Ub-EIG" secondAttribute="leading" constant="24" id="fjF-rg-Taf"/>
                             <constraint firstItem="f8V-W6-zoR" firstAttribute="leading" secondItem="gys-Ub-EIG" secondAttribute="leading" id="jXa-s1-v0b"/>
                             <constraint firstItem="gys-Ub-EIG" firstAttribute="bottom" secondItem="f8V-W6-zoR" secondAttribute="bottom" id="odw-Sz-JQb"/>
-                            <constraint firstItem="gys-Ub-EIG" firstAttribute="trailing" secondItem="YyE-Fv-cZ7" secondAttribute="trailing" constant="20" id="oeq-qq-dYA"/>
-                            <constraint firstItem="gys-Ub-EIG" firstAttribute="trailing" secondItem="YyE-Fv-cZ7" secondAttribute="trailing" constant="20" id="p8G-YR-Eoz"/>
-                            <constraint firstItem="f8V-W6-zoR" firstAttribute="top" secondItem="YyE-Fv-cZ7" secondAttribute="bottom" constant="20" id="tPt-S0-Mcm"/>
-                            <constraint firstItem="YyE-Fv-cZ7" firstAttribute="top" secondItem="gys-Ub-EIG" secondAttribute="top" constant="80" id="xTR-gp-rvL"/>
+                            <constraint firstItem="gys-Ub-EIG" firstAttribute="trailing" secondItem="YyE-Fv-cZ7" secondAttribute="trailing" constant="24" id="rKW-2O-8cE"/>
+                            <constraint firstItem="gys-Ub-EIG" firstAttribute="top" secondItem="YyE-Fv-cZ7" secondAttribute="top" constant="8" id="weQ-Fd-sdE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZAu-OB-kin"/>
@@ -136,8 +125,8 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qah-QX-VNs">
-                                            <rect key="frame" x="92" y="16" width="265" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <rect key="frame" x="92" y="17" width="265" height="19.333333333333329"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -318,14 +307,14 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MatchCell" id="xca-t6-diU" customClass="MatchCell" customModule="Active" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="400" width="393" height="55.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="400" width="393" height="56.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xca-t6-diU" id="lQt-3i-GQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="55.333332061767578"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="56.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpX-2i-gDh">
-                                                    <rect key="frame" x="40" y="17" width="313" height="21.333333333333329"/>
+                                                    <rect key="frame" x="40" y="17" width="313" height="22.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -583,9 +572,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray4Color">
-            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -31,6 +31,10 @@ UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.backgroundColor = traitCollection.userInterfaceStyle == .dark
+        ? UIColor(red: 24/255, green: 24/255, blue: 32/255, alpha: 1)
+        : .systemBackground
+        tableView.separatorStyle = .none
 
         title = "Leagues"
 
@@ -128,7 +132,17 @@ extension LeaguesTableViewController {
             withIdentifier: "LeagueCell",
             for: indexPath
         ) as! LeaguesTableViewCell
-
+        if traitCollection.userInterfaceStyle == .dark {
+            cell.contentView.backgroundColor = UIColor(
+                red: 30/255,
+                green: 30/255,
+                blue: 40/255,
+                alpha: 1
+            )
+        } else {
+            cell.contentView.backgroundColor = .white
+        }
+        
         guard let league =
                 presenter?.getLeague(at: indexPath.row)
         else {
@@ -146,8 +160,14 @@ extension LeaguesTableViewController {
            let url = URL(string: imageString) {
 
             cell.leagueImageView.kf.setImage(
-                with: url
+                with: url,
+                placeholder: UIImage(named: "placeholder")
             )
+
+        } else {
+
+            cell.leagueImageView.image =
+            UIImage(named: "placeholder")
         }
 
         // MARK: - Favorite Button State

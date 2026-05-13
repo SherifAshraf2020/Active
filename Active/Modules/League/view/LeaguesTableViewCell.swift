@@ -18,19 +18,39 @@ class LeaguesTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        backgroundColor = .clear
     }
   
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
         favoriteButtonAction?()
     }
     override func layoutSubviews() {
-          super.layoutSubviews()
+        super.layoutSubviews()
 
-          leagueImageView.layer.cornerRadius =
-          leagueImageView.frame.width / 2
+        backgroundColor = .clear
 
-          leagueImageView.clipsToBounds = true
-      }
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(
+            top: 8,
+            left: 16,
+            bottom: 8,
+            right: 16
+        ))
+
+        contentView.layer.cornerRadius = 18
+        contentView.layer.masksToBounds = true
+
+        layer.masksToBounds = false
+
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.15
+        layer.shadowRadius = 6
+        layer.shadowOffset = CGSize(width: 0, height: 3)
+
+        leagueImageView.layer.cornerRadius =
+        leagueImageView.frame.width / 2
+
+        leagueImageView.clipsToBounds = true
+    }
     override func setSelected(
            _ selected: Bool,
            animated: Bool
@@ -41,6 +61,7 @@ class LeaguesTableViewCell: UITableViewCell {
                animated: animated
            )
        }
+    
     func configureFavoriteButton(
         isFavorite: Bool
     ) {

@@ -73,6 +73,7 @@ class LeagueDetailsPresenter: LeagueDetailsPresenterProtocol {
     func viewDidLoad() {
 
         view?.startLoading()
+        
 
         let group = DispatchGroup()
 

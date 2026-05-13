@@ -63,6 +63,9 @@ class LeagueDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = traitCollection.userInterfaceStyle == .dark
+        ? UIColor(red: 18/255, green: 18/255, blue: 24/255, alpha: 1)
+        : .systemBackground
         title = league?.leagueName ?? "League Details"
 
         presenter = LeagueDetailsPresenter(
@@ -72,8 +75,8 @@ class LeagueDetailsViewController: UIViewController {
         
         setupCollectionView()
         setupFavoriteButton()
-        view.backgroundColor = UIColor.systemGroupedBackground
-        collectionView.backgroundColor = UIColor.systemGroupedBackground
+//        view.backgroundColor = UIColor.systemGroupedBackground
+//        collectionView.backgroundColor = UIColor.systemGroupedBackground
         
         presenter.viewDidLoad()
         view.addSubview(emptyLabel)

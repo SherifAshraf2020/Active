@@ -38,6 +38,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        favoritesTableView.separatorStyle = .none
         setupEmptyStateUI()
         presenter = FavoritesPresenter(view: self)
         favoritesTableView.delegate = self
@@ -99,7 +100,16 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as! FavoriteTableViewCell
-        
+        if traitCollection.userInterfaceStyle == .dark {
+            cell.contentView.backgroundColor = UIColor(
+                red: 30/255,
+                green: 30/255,
+                blue: 40/255,
+                alpha: 1
+            )
+        } else {
+            cell.contentView.backgroundColor = .white
+        }
         if isLeagueView {
             let league = favoriteLeagues[indexPath.row]
             cell.leagueName?.text = league.league_name

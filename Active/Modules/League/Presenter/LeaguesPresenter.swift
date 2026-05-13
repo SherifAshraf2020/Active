@@ -33,8 +33,6 @@ class LeaguesPresenter: LeaguesPresenterProtocol {
 
     private var leagues: [LeagueModel] = []
 
-    private let apiKey = "f69af4d4e154aa04352c419df0d512db4c47ae29f35fd536d7ba2cd1b2de974e"
-
     func attachView(_ view: LeaguesViewProtocol) {
 
         self.view = view
@@ -53,7 +51,7 @@ class LeaguesPresenter: LeaguesPresenterProtocol {
         view?.startLoading()
 
         let url =
-        "https://apiv2.allsportsapi.com/\(sport)/?met=Leagues&APIkey=\(apiKey)"
+        "https://apiv2.allsportsapi.com/\(sport)/?met=Leagues&APIkey=\(APIConstants.apiKey)"
 
         NetworkService.shared.fetchData(
             urlString: url,

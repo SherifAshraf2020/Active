@@ -25,6 +25,29 @@ class FavoriteTableViewCell: UITableViewCell {
         leagueLogo.clipsToBounds = true
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        backgroundColor = .clear
+
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(
+            top: 8,
+            left: 16,
+            bottom: 8,
+            right: 16
+        ))
+
+        contentView.layer.cornerRadius = 18
+        contentView.layer.masksToBounds = true
+
+        layer.masksToBounds = false
+
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.15
+        layer.shadowRadius = 6
+        layer.shadowOffset = CGSize(width: 0, height: 3)
+
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
