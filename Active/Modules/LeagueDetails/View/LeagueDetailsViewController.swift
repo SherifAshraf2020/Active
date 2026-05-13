@@ -528,20 +528,38 @@ UICollectionViewDelegate {
         // MARK: Teams
             
         case .teams:
-            
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "TeamCell",
                 for: indexPath
             ) as! TeamCell
             
-            let team = presenter.getTeam(
-                at: indexPath.row
-            )
+            let team = presenter.getTeam(at: indexPath.row)
+            let teamKey = Int64(team.team_key ?? 0)
             
-            cell.configure(team: team)
+            let favoriteTeams = CoreDataManager.shared.fetchFavoriteTeams()
+            let favoriteEntity = favoriteTeams.first(where: { $0.team_key == teamKey })
+            let isFavorite = favoriteEntity != nil
+            
+            cell.configure(team: team, isFav: isFavorite)
+            
+            cell.onFavoriteTapped = { [weak self] in
+                guard let self = self else { return }
+                
+                if let entityToDelete = favoriteEntity {
+                    CoreDataManager.shared.deleteTeam(team: entityToDelete)
+                } else {
+                    CoreDataManager.shared.saveTeam(
+                        key: teamKey,
+                        name: team.team_name ?? "",
+                        logo: team.team_logo ?? "",
+                        sport: "Football"
+                    )
+                }
+                
+                self.collectionView.reloadItems(at: [indexPath])
+            }
             
             return cell
-            
             
         default:
             return UICollectionViewCell()
@@ -561,6 +579,11 @@ UICollectionViewDelegate {
         switch section {
             
         case .teams:
+            if !NetworkMonitor.shared.checkConnection() {
+                        self.showError(message: "Internet connection is required to view team details and players.")
+                        return
+                    }
+            
             let team = presenter.getTeam(at: indexPath.row)
 
                 let storyboard = UIStoryboard(
@@ -625,21 +648,25 @@ LeagueDetailsViewProtocol {
     
     
     func showError(message: String) {
-        
-        let alert = UIAlertController(
-            title: "Error",
-            message: message,
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(
-            UIAlertAction(
-                title: "OK",
-                style: .default
-            )
-        )
-        
-        present(alert, animated: true)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Connection Error", message: message, preferredStyle: .alert)
+            
+            let retry = UIAlertAction(title: "Retry", style: .default) { [weak self] _ in
+                self?.presenter.viewDidLoad()
+            }
+            
+            let ok = UIAlertAction(title: "OK", style: .cancel)
+            
+            alert.addAction(retry)
+            alert.addAction(ok)
+            self.present(alert, animated: true)
+            
+            if self.presenter.getUpcomingCount() == 0 &&
+               self.presenter.getLatestCount() == 0 &&
+               self.presenter.getTeamsCount() == 0 {
+                self.emptyLabel.isHidden = false
+            }
+        }
     }
 }
 

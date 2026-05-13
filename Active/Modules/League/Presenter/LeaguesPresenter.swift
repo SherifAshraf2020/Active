@@ -41,6 +41,14 @@ class LeaguesPresenter: LeaguesPresenterProtocol {
     }
 
     func getLeagues(for sport: String) {
+        
+        
+        if !NetworkMonitor.shared.checkConnection() {
+                self.view?.stopLoading()
+                self.view?.showError(message: "No internet connection. Please check your network to see the latest leagues.")
+                return
+            }
+        
 
         view?.startLoading()
 

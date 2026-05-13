@@ -375,116 +375,76 @@ extension LatestEventCell {
 
 class TeamCell: UICollectionViewCell {
 
-    // MARK: - UI Components
-
     private let imageView = UIImageView()
-
     private let nameLabel = UILabel()
-
-
-    // MARK: - Init
+    private let favoriteButton = UIButton(type: .system)
+    
+    var onFavoriteTapped: (() -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         setupUI()
     }
-
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    @objc private func favTapped() {
+        onFavoriteTapped?()
+    }
 }
-
-
-// MARK: - Setup UI
 
 extension TeamCell {
 
     private func setupUI() {
-
         contentView.backgroundColor = .clear
 
-
-        // MARK: Image
-
         imageView.contentMode = .scaleAspectFit
-
         imageView.clipsToBounds = true
-
-
-        // MARK: Label
-
-        nameLabel.font = .systemFont(ofSize: 14)
-
+        
+        nameLabel.font = .boldSystemFont(ofSize: 12)
         nameLabel.textAlignment = .center
-
         nameLabel.numberOfLines = 2
+        favoriteButton.addTarget(self, action: #selector(favTapped), for: .touchUpInside)
+        favoriteButton.tintColor = .systemRed
 
+        contentView.addSubview(imageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(favoriteButton)
 
-        // MARK: Stack
-
-        let stack = UIStackView(
-            arrangedSubviews: [
-                imageView,
-                nameLabel
-            ]
-        )
-
-        stack.axis = .vertical
-
-        stack.spacing = 8
-
-
-        contentView.addSubview(stack)
-
-        stack.translatesAutoresizingMaskIntoConstraints = false
-
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 80),
+            imageView.heightAnchor.constraint(equalToConstant: 80),
 
-            stack.topAnchor.constraint(
-                equalTo: contentView.topAnchor
-            ),
+            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nameLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor),
 
-            stack.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor
-            ),
-
-            stack.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor
-            ),
-
-            stack.bottomAnchor.constraint(
-                equalTo: contentView.bottomAnchor
-            ),
-
-            imageView.heightAnchor.constraint(
-                equalToConstant: 80
-            )
+            favoriteButton.topAnchor.constraint(equalTo: imageView.topAnchor, constant: -4),
+            favoriteButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 4),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 28),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
 
-
     override func layoutSubviews() {
         super.layoutSubviews()
-
-        imageView.layer.cornerRadius =
-        imageView.frame.width / 2
+        imageView.layer.cornerRadius = imageView.frame.width / 2
     }
-}
 
-
-// MARK: - Configure
-
-extension TeamCell {
-
-    func configure(team: Team) {
-
+    func configure(team: Team, isFav: Bool) {
         nameLabel.text = team.team_name
-
-        imageView.kf.setImage(
-            with: URL(string: team.team_logo ?? "")
-        )
+        imageView.kf.setImage(with: URL(string: team.team_logo ?? ""), placeholder: UIImage(systemName: "sportscourt"))
+        
+        let heartIcon = isFav ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        favoriteButton.setImage(heartIcon, for: .normal)
     }
 }

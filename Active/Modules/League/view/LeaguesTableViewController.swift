@@ -80,19 +80,21 @@ LeaguesViewProtocol {
     }
 
     func showError(message: String) {
-
         let alert = UIAlertController(
-            title: "Error",
+            title: "Connection Issue",
             message: message,
             preferredStyle: .alert
         )
 
-        alert.addAction(
-            UIAlertAction(
-                title: "OK",
-                style: .default
-            )
-        )
+        let retryAction = UIAlertAction(title: "Retry", style: .default) { [weak self] _ in
+            let nameToFetch = self?.selectedSport?.lowercased() ?? "football"
+            self?.presenter?.getLeagues(for: nameToFetch)
+        }
+
+        let okAction = UIAlertAction(title: "OK", style: .cancel)
+
+        alert.addAction(retryAction)
+        alert.addAction(okAction)
 
         present(alert, animated: true)
     }
@@ -184,6 +186,11 @@ extension LeaguesTableViewController {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
+        
+        if !NetworkMonitor.shared.checkConnection() {
+                self.showError(message: "Internet connection is required to view league details.")
+                return
+            }
 
         guard let selectedLeague =
                 presenter?.getLeague(at: indexPath.row)

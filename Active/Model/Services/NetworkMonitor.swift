@@ -14,7 +14,7 @@ class NetworkMonitor {
 
     private let monitor = NWPathMonitor()
 
-    private var isConnected = false
+    private var isConnected = true
 
     private init() {
 

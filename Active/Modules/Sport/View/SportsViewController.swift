@@ -86,7 +86,6 @@ extension SportsViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        print("UI is asking for number of items. Current count: \(sportsList.count)")
         return sportsList.count
     }
     
@@ -96,21 +95,23 @@ extension SportsViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let sport = sportsList[indexPath.row]
         cell.sportLabel.text = sport.strSport
         
-        if let url = URL(string: sport.strSportThumb) {
-                    cell.sportImageView.kf.setImage(
-                        with: url,
-                        placeholder: UIImage(named: "placeholder"),
-                        options: [
-                            .transition(.fade(0.4)),                         .cacheOriginalImage
-                        ]
-                    )
-                }
-        return cell
+        if let image = UIImage(named: sport.strSportThumb) {
+                cell.sportImageView.image = image
+            } else {
+                cell.sportImageView.image = UIImage(named: "placeholder")
+            }
+            
+            return cell
     }
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sport = sportsList[indexPath.row]
+        
+        if !NetworkMonitor.shared.checkConnection() {
+                self.displayError(message: "Internet connection is required to fetch leagues.")
+                return
+            }
         
         if let leaguesVC = storyboard?.instantiateViewController(withIdentifier: "LeaguesTableViewController") as? LeaguesTableViewController {
             leaguesVC.selectedSport = sport.strSport 
@@ -152,7 +153,6 @@ extension SportsViewController: UICollectionViewDelegate, UICollectionViewDataSo
 extension SportsViewController: SportsViewProtocol {
     func displaySports(_ sports: [Sport]) {
         
-        print("Successfully fetched \(sports.count) sports from API")
         self.sportsList = sports
         DispatchQueue.main.async {
             

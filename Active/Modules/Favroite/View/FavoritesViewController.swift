@@ -6,21 +6,18 @@
 //
 
 import UIKit
-
+import Kingfisher
 
 class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FavoritesViewProtocol {
 
-    // MARK: - Outlets
     @IBOutlet weak var favoritesTableView: UITableView!
     @IBOutlet weak var favoriteSegmentControl: UISegmentedControl!
     
-    // MARK: - Properties
     var favoriteLeagues: [League] = []
     var favoriteTeams: [TeamEntity] = []
     var isLeagueView = true
     var presenter: FavoritesPresenter!
 
-    // MARK: - Empty State UI Components
     let noDataView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -39,14 +36,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         return label
     }()
     
-    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupEmptyStateUI()
         presenter = FavoritesPresenter(view: self)
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -54,14 +49,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         presenter.getFavorites()
     }
     
-    // MARK: - Actions
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         presenter.currentSegmentIndex = sender.selectedSegmentIndex
         isLeagueView = (sender.selectedSegmentIndex == 0)
         presenter.getFavorites()
     }
     
-    // MARK: - UI Setup
     private func setupEmptyStateUI() {
         view.addSubview(noDataView)
         noDataView.addSubview(messageLabel)
@@ -79,7 +72,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         ])
     }
 
-    // MARK: - Protocol Implementation
     func showFavorites(leagues: [League]?, teams: [TeamEntity]?, isLeague: Bool) {
         self.isLeagueView = isLeague
         if isLeague {
@@ -101,7 +93,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         self.noDataView.isHidden = false
     }
 
-    // MARK: - TableView DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return isLeagueView ? favoriteLeagues.count : favoriteTeams.count
     }
@@ -112,99 +103,84 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         if isLeagueView {
             let league = favoriteLeagues[indexPath.row]
             cell.leagueName?.text = league.league_name
+            
+            if let logoString = league.league_logo, let url = URL(string: logoString) {
+                cell.leagueLogo.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"))
+            } else {
+                cell.leagueLogo.image = UIImage(named: "placeholder")
+            }
+
             cell.deleteHandler = { [weak self] in
-
-                guard let self = self else {
-                    return
-                }
-
+                guard let self = self else { return }
                 let alert = UIAlertController(
                     title: "Remove Favorite",
                     message: "Are you sure you want to remove this league from favorites?",
                     preferredStyle: .alert
                 )
-
-                alert.addAction(
-                    UIAlertAction(
-                        title: "Cancel",
-                        style: .cancel
-                    )
-                )
-
-                alert.addAction(
-                    UIAlertAction(
-                        title: "Delete",
-                        style: .destructive
-                    ) { _ in
-
-                        self.presenter.deleteLeague(
-                            league: league
-                        )
-                    }
-                )
-
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
+                    self.presenter.deleteLeague(league: league)
+                })
                 self.present(alert, animated: true)
             }
         } else {
             let team = favoriteTeams[indexPath.row]
             cell.leagueName?.text = team.team_name
+            
+            if let logoString = team.team_logo, let url = URL(string: logoString) {
+                cell.leagueLogo.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"))
+            } else {
+                cell.leagueLogo.image = UIImage(named: "placeholder")
+            }
+
             cell.deleteHandler = { [weak self] in
-                self?.presenter.deleteTeam(team: team)
+                guard let self = self else { return }
+                let alert = UIAlertController(
+                    title: "Remove Favorite",
+                    message: "Are you sure you want to remove this team from favorites?",
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
+                    self.presenter.deleteTeam(team: team)
+                })
+                self.present(alert, animated: true)
             }
         }
         return cell
     }
-    func tableView(
-        _ tableView: UITableView,
-        didSelectRowAt indexPath: IndexPath
-    ) {
 
-        // CHECK INTERNET
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !NetworkMonitor.shared.checkConnection() {
-
             let alert = UIAlertController(
                 title: "No Internet",
-                message: "Internet connection is required to open league details.",
+                message: "Internet connection is required to open details.",
                 preferredStyle: .alert
             )
-
-            alert.addAction(
-                UIAlertAction(
-                    title: "OK",
-                    style: .default
-                )
-            )
-
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
             present(alert, animated: true)
-
             return
         }
 
-        // OPEN DETAILS
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
         if isLeagueView {
-
-            let league =
-            favoriteLeagues[indexPath.row]
-
-            let storyboard = UIStoryboard(
-                name: "Main",
-                bundle: nil
+            let league = favoriteLeagues[indexPath.row]
+            let detailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as! LeagueDetailsViewController
+            detailsVC.leagueID = Int(league.league_key ?? "") ?? 0
+            navigationController?.pushViewController(detailsVC, animated: true)
+        } else {
+            let teamEntity = favoriteTeams[indexPath.row]
+            let teamDetailsVC = storyboard.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
+            
+            let team = Team(
+                team_key: Int(teamEntity.team_key),
+                team_name: teamEntity.team_name,
+                team_logo: teamEntity.team_logo
             )
-
-            let detailsVC =
-            storyboard.instantiateViewController(
-                withIdentifier: "LeagueDetailsViewController"
-            ) as! LeagueDetailsViewController
-
-            detailsVC.leagueID =
-            Int(league.league_key ?? "") ?? 0
-
-            navigationController?.pushViewController(
-                detailsVC,
-                animated: true
-            )
+            
+            teamDetailsVC.team = team
+            navigationController?.pushViewController(teamDetailsVC, animated: true)
         }
     }
 }
