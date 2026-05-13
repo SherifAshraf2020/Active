@@ -11,7 +11,7 @@ class TeamDetailsViewController: UIViewController {
 
     var presenter: TeamDetailsPresenter!
     var teamData: TDTeam?
-    
+    var team: Team?
     @IBOutlet weak var tableView: UITableView!
     
     enum Sections: Int, CaseIterable {
@@ -30,7 +30,15 @@ class TeamDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
-        presenter.getTeamDetails()
+        title = team?.team_name ?? "Team Details"
+        if let team = team {
+            
+            presenter = TeamDetailsPresenter(
+                view: self,
+                teamId: team.team_key ?? 0
+            )
+            presenter.getTeamDetails()
+        }
     }
 }
 

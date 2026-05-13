@@ -561,7 +561,24 @@ UICollectionViewDelegate {
         switch section {
             
         case .teams:
-            print("Navigate To Team Details")
+            let team = presenter.getTeam(at: indexPath.row)
+
+                let storyboard = UIStoryboard(
+                    name: "Main",
+                    bundle: nil
+                )
+
+                let teamDetailsVC =
+                storyboard.instantiateViewController(
+                    withIdentifier: "TeamDetailsViewController"
+                ) as! TeamDetailsViewController
+
+                teamDetailsVC.team = team
+
+                navigationController?.pushViewController(
+                    teamDetailsVC,
+                    animated: true
+                )
             
         default:
             break
