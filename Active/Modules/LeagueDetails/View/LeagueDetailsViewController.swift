@@ -34,6 +34,8 @@ class LeagueDetailsViewController: UIViewController {
     
     var leagueID: Int = 152
     
+    var league: LeagueModel?
+    
     let indicator = UIActivityIndicatorView(style: .large)
     
     private let emptyLabel: UILabel = {
@@ -132,22 +134,19 @@ extension LeagueDetailsViewController {
 
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
 
-        favoriteButton.setImage(
-            UIImage(systemName: "heart.fill"),
-            for: .normal
-        )
-
         favoriteButton.tintColor = .white
 
         favoriteButton.backgroundColor = .systemRed
 
         favoriteButton.layer.cornerRadius = 30
 
-        favoriteButton.layer.shadowColor = UIColor.black.cgColor
+        favoriteButton.layer.shadowColor =
+        UIColor.black.cgColor
 
         favoriteButton.layer.shadowOpacity = 0.3
 
-        favoriteButton.layer.shadowOffset = CGSize(width: 0, height: 4)
+        favoriteButton.layer.shadowOffset =
+        CGSize(width: 0, height: 4)
 
         favoriteButton.layer.shadowRadius = 6
 
@@ -177,16 +176,68 @@ extension LeagueDetailsViewController {
                 constant: -24
             )
         ])
+
+        updateFavoriteButton()
     }
 
 
+    // MARK: - Update Favorite Button
+
+    private func updateFavoriteButton() {
+
+        guard let league = league else {
+            return
+        }
+
+        let isFavorite =
+        presenter.isFavorite(
+            league: league
+        )
+
+        let imageName =
+        isFavorite ? "heart.fill" : "heart"
+
+        let image = UIImage(
+            systemName: imageName
+        )?.withTintColor(
+            .white,
+            renderingMode: .alwaysOriginal
+        )
+
+        favoriteButton.setImage(
+            image,
+            for: .normal
+        )
+    }
+
+
+    // MARK: - Favorite Action
+
     @objc private func favoriteButtonTapped() {
 
-        print("Add League To Favorites")
+        guard let league = league else {
+            return
+        }
+
+        let isFavorite =
+        presenter.isFavorite(
+            league: league
+        )
+
+        presenter.toggleFavorite(
+            league: league
+        )
+
+        updateFavoriteButton()
+
+        let message =
+        isFavorite
+        ? "League Removed Successfully"
+        : "League Added Successfully"
 
         let alert = UIAlertController(
             title: "Favorites",
-            message: "League Added Successfully",
+            message: message,
             preferredStyle: .alert
         )
 
