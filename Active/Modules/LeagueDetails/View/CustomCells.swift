@@ -16,9 +16,7 @@ class UpcomingEventCell: UICollectionViewCell {
 
     private let eventNameLabel = UILabel()
 
-    private let dateLabel = UILabel()
-
-    private let timeLabel = UILabel()
+    private let dateTimeLabel = UILabel()
 
     private let homeImageView = UIImageView()
 
@@ -48,30 +46,41 @@ extension UpcomingEventCell {
 
         contentView.backgroundColor = .systemGray6
 
-        contentView.layer.cornerRadius = 16
+        contentView.layer.cornerRadius = 18
+
+        contentView.layer.shadowColor = UIColor.black.cgColor
+
+        contentView.layer.shadowOpacity = 0.08
+
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
+
+        contentView.layer.shadowRadius = 4
 
 
         // MARK: Event Name
 
-        eventNameLabel.font = .boldSystemFont(ofSize: 18)
+        eventNameLabel.font = .systemFont(
+            ofSize: 18,
+            weight: .semibold
+        )
 
         eventNameLabel.textAlignment = .center
 
         eventNameLabel.numberOfLines = 2
 
-
-        // MARK: Date
-
-        dateLabel.font = .systemFont(ofSize: 16)
-
-        dateLabel.textAlignment = .center
+        eventNameLabel.lineBreakMode = .byTruncatingTail
 
 
-        // MARK: Time
+        // MARK: Date & Time
 
-        timeLabel.font = .systemFont(ofSize: 16)
+        dateTimeLabel.font = .systemFont(
+            ofSize: 13,
+            weight: .medium
+        )
 
-        timeLabel.textAlignment = .center
+        dateTimeLabel.textAlignment = .center
+
+        dateTimeLabel.textColor = .secondaryLabel
 
 
         // MARK: Images
@@ -81,20 +90,31 @@ extension UpcomingEventCell {
         awayImageView.contentMode = .scaleAspectFit
 
 
-        // MARK: Images Stack
+        // MARK: Logos Stack
 
-        let imagesStack = UIStackView(
+        let logosStack = UIStackView(
             arrangedSubviews: [
                 homeImageView,
                 awayImageView
             ]
         )
 
-        imagesStack.axis = .horizontal
+        logosStack.axis = .horizontal
 
-        imagesStack.distribution = .fillEqually
+        logosStack.alignment = .center
 
-        imagesStack.spacing = 16
+        logosStack.distribution = .fill
+
+        logosStack.spacing = 40
+
+        logosStack.layoutMargins = UIEdgeInsets(
+            top: 0,
+            left: 12,
+            bottom: 0,
+            right: 12
+        )
+
+        logosStack.isLayoutMarginsRelativeArrangement = true
 
 
         // MARK: Main Stack
@@ -102,15 +122,14 @@ extension UpcomingEventCell {
         let mainStack = UIStackView(
             arrangedSubviews: [
                 eventNameLabel,
-                dateLabel,
-                timeLabel,
-                imagesStack
+                dateTimeLabel,
+                logosStack
             ]
         )
 
         mainStack.axis = .vertical
 
-        mainStack.spacing = 16
+        mainStack.spacing = 6
 
 
         contentView.addSubview(mainStack)
@@ -122,30 +141,41 @@ extension UpcomingEventCell {
 
             mainStack.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
-                constant: 16
+                constant: 14
             ),
 
             mainStack.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: 16
+                constant: 14
             ),
 
             mainStack.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: -16
+                constant: -14
             ),
 
             mainStack.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,
-                constant: -16
+                constant: -14
+            ),
+
+
+            // MARK: Logo Sizes
+
+            homeImageView.widthAnchor.constraint(
+                equalToConstant: 68
             ),
 
             homeImageView.heightAnchor.constraint(
-                equalToConstant: 80
+                equalToConstant: 68
+            ),
+
+            awayImageView.widthAnchor.constraint(
+                equalToConstant: 68
             ),
 
             awayImageView.heightAnchor.constraint(
-                equalToConstant: 80
+                equalToConstant: 68
             )
         ])
     }
@@ -161,9 +191,8 @@ extension UpcomingEventCell {
         eventNameLabel.text =
         "\(event.event_home_team ?? "") VS \(event.event_away_team ?? "")"
 
-        dateLabel.text = event.event_date
-
-        timeLabel.text = event.event_time
+        dateTimeLabel.text =
+        "\(event.event_date ?? "") • \(event.event_time ?? "")"
 
 
         homeImageView.kf.setImage(
@@ -187,9 +216,7 @@ class LatestEventCell: UICollectionViewCell {
 
     private let scoreLabel = UILabel()
 
-    private let dateLabel = UILabel()
-
-    private let timeLabel = UILabel()
+    private let infoLabel = UILabel()
 
     private let homeImageView = UIImageView()
 
@@ -223,7 +250,7 @@ extension LatestEventCell {
 
         contentView.layer.shadowColor = UIColor.black.cgColor
 
-        contentView.layer.shadowOpacity = 0.1
+        contentView.layer.shadowOpacity = 0.08
 
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
 
@@ -232,36 +259,37 @@ extension LatestEventCell {
 
         // MARK: Teams Label
 
-        teamsLabel.font = .boldSystemFont(ofSize: 22)
+        teamsLabel.font = .systemFont(
+            ofSize: 16,
+            weight: .semibold
+        )
 
         teamsLabel.textAlignment = .center
 
         teamsLabel.numberOfLines = 2
 
+        teamsLabel.lineBreakMode = .byTruncatingTail
+
 
         // MARK: Score Label
 
-        scoreLabel.font = .boldSystemFont(ofSize: 30)
+        scoreLabel.font = .boldSystemFont(ofSize: 24)
 
         scoreLabel.textAlignment = .center
 
         scoreLabel.textColor = .systemBlue
 
 
-        // MARK: Date & Time
+        // MARK: Date & Time Label
 
-        dateLabel.font = .systemFont(ofSize: 14)
+        infoLabel.font = .systemFont(
+            ofSize: 11,
+            weight: .medium
+        )
 
-        dateLabel.textAlignment = .center
+        infoLabel.textAlignment = .center
 
-        dateLabel.textColor = .secondaryLabel
-
-
-        timeLabel.font = .systemFont(ofSize: 14)
-
-        timeLabel.textAlignment = .center
-
-        timeLabel.textColor = .secondaryLabel
+        infoLabel.textColor = .secondaryLabel
 
 
         // MARK: Images
@@ -271,20 +299,23 @@ extension LatestEventCell {
         awayImageView.contentMode = .scaleAspectFit
 
 
-        // MARK: Images Stack
+        // MARK: Match Stack
 
-        let imagesStack = UIStackView(
+        let matchStack = UIStackView(
             arrangedSubviews: [
                 homeImageView,
+                scoreLabel,
                 awayImageView
             ]
         )
 
-        imagesStack.axis = .horizontal
+        matchStack.axis = .horizontal
 
-        imagesStack.distribution = .fillEqually
+        matchStack.alignment = .center
 
-        imagesStack.spacing = 24
+        matchStack.distribution = .fill
+
+        matchStack.spacing = 24
 
 
         // MARK: Main Stack
@@ -292,16 +323,16 @@ extension LatestEventCell {
         let mainStack = UIStackView(
             arrangedSubviews: [
                 teamsLabel,
-                scoreLabel,
-                dateLabel,
-                timeLabel,
-                imagesStack
+                infoLabel,
+                matchStack
             ]
         )
 
         mainStack.axis = .vertical
 
-        mainStack.spacing = 8
+        mainStack.alignment = .fill
+
+        mainStack.spacing = 2
 
 
         contentView.addSubview(mainStack)
@@ -313,32 +344,53 @@ extension LatestEventCell {
 
             mainStack.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
-                constant: 16
+                constant: 10
             ),
 
             mainStack.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: 16
+                constant: 10
             ),
 
             mainStack.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: -16
+                constant: -10
             ),
 
             mainStack.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,
-                constant: -16
+                constant: -10
+            ),
+
+
+            // MARK: Logo Sizes
+
+            homeImageView.widthAnchor.constraint(
+                equalToConstant: 60
             ),
 
             homeImageView.heightAnchor.constraint(
-                equalToConstant: 80
+                equalToConstant: 60
+            ),
+
+            awayImageView.widthAnchor.constraint(
+                equalToConstant: 60
             ),
 
             awayImageView.heightAnchor.constraint(
-                equalToConstant: 80
-            )
+                equalToConstant: 60
+            ),
+           
         ])
+        scoreLabel.setContentHuggingPriority(
+            .required,
+            for: .horizontal
+        )
+
+        scoreLabel.setContentCompressionResistancePriority(
+            .required,
+            for: .horizontal
+        )
     }
 }
 
@@ -355,9 +407,8 @@ extension LatestEventCell {
         scoreLabel.text =
         event.event_final_result ?? "VS"
 
-        dateLabel.text = event.event_date
-
-        timeLabel.text = event.event_time
+        infoLabel.text =
+            "\(event.event_date ?? "") • \(event.event_time ?? "")"
 
         homeImageView.kf.setImage(
             with: URL(string: event.home_team_logo ?? ""),

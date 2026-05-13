@@ -25,7 +25,7 @@ protocol LeagueDetailsPresenterProtocol {
     
     func toggleFavorite(
         league: LeagueModel
-    )
+    ) -> Bool
 
     func isFavorite(
         league: LeagueModel
@@ -276,66 +276,51 @@ extension LeagueDetailsPresenter {
         return teams[index]
     }
 }
-extension LeagueDetailsPresenter{
+
+// MARK: - Favorites
+
+extension LeagueDetailsPresenter {
+
     func isFavorite(
         league: LeagueModel
     ) -> Bool {
 
-        let key =
-        "\(league.leagueKey ?? 0)"
+        let key = "\(league.leagueKey ?? 0)"
 
-        return CoreDataManager.shared
-            .isLeagueFavorite(key: key)
+        return CoreDataManager.shared.isLeagueFavorite(
+            key: key
+        )
     }
+
+
     func toggleFavorite(
         league: LeagueModel
-    ) {
+    ) -> Bool {
 
-        let key =
-        "\(league.leagueKey ?? 0)"
+        let key = "\(league.leagueKey ?? 0)"
 
-        // REMOVE
+        // MARK: Remove From Favorites
 
-        if CoreDataManager.shared
-            .isLeagueFavorite(key: key) {
+        if CoreDataManager.shared.isLeagueFavorite(
+            key: key
+        ) {
 
             CoreDataManager.shared.deleteLeague(
                 by: key
             )
 
-            return
+            return false
         }
 
-        // SAVE
+        // MARK: Add To Favorites
 
-        guard let imageUrl =
-                league.leagueLogo,
-              let url = URL(string: imageUrl)
-        else {
-            return
-        }
+        CoreDataManager.shared.saveLeague(
+            key: key,
+            name: league.leagueName ?? "",
+            logo: league.leagueLogo ?? "",
+            sport: "Football"
+        )
 
-        URLSession.shared.dataTask(
-            with: url
-        ) { data, _, error in
-
-            if let error = error {
-
-                print(error.localizedDescription)
-
-                return
-            }
-
-            DispatchQueue.main.async {
-
-                CoreDataManager.shared.saveLeague(
-                    key: key,
-                    name: league.leagueName ?? "",
-                    logo: league.leagueLogo ?? "",
-                    sport: ""
-                )
-            }
-
-        }.resume()
+        return true
     }
 }

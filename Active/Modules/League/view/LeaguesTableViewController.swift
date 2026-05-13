@@ -169,15 +169,77 @@ extension LeaguesTableViewController {
                 return
             }
 
-            self.presenter?.toggleFavorite(
-                league: league,
-                sport: self.selectedSport ?? ""
-            )
+            let isFavorite =
+            self.presenter?.isFavorite(
+                league: league
+            ) ?? false
 
-            tableView.reloadRows(
-                at: [indexPath],
-                with: .automatic
-            )
+            
+            // MARK: - Already Favorite -> Show Delete Alert
+
+            if isFavorite {
+
+                let alert = UIAlertController(
+                    title: "Remove Favorite",
+                    message: "Are you sure you want to remove this league from favorites?",
+                    preferredStyle: .alert
+                )
+
+                let deleteAction = UIAlertAction(
+                    title: "Remove",
+                    style: .destructive
+                ) { _ in
+
+                    self.presenter?.toggleFavorite(
+                        league: league,
+                        sport: self.selectedSport ?? ""
+                    )
+
+                    tableView.reloadRows(
+                        at: [indexPath],
+                        with: .automatic
+                    )
+                }
+
+                let cancelAction = UIAlertAction(
+                    title: "Cancel",
+                    style: .cancel
+                )
+
+                alert.addAction(deleteAction)
+                alert.addAction(cancelAction)
+
+                self.present(alert, animated: true)
+
+            } else {
+
+                // MARK: - Add Directly
+
+                self.presenter?.toggleFavorite(
+                    league: league,
+                    sport: self.selectedSport ?? ""
+                )
+
+                tableView.reloadRows(
+                    at: [indexPath],
+                    with: .automatic
+                )
+
+                let alert = UIAlertController(
+                    title: "Added To Favorites",
+                    message: "League added successfully.",
+                    preferredStyle: .alert
+                )
+
+                alert.addAction(
+                    UIAlertAction(
+                        title: "OK",
+                        style: .default
+                    )
+                )
+
+                self.present(alert, animated: true)
+            }
         }
 
         return cell
