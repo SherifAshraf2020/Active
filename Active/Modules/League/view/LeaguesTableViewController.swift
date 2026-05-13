@@ -43,6 +43,14 @@ UITableViewController {
         let nameToFetch = selectedSport?.lowercased() ?? "football"
         presenter?.getLeagues(for: nameToFetch)
     }
+    override func viewWillAppear(
+        _ animated: Bool
+    ) {
+
+        super.viewWillAppear(animated)
+
+        tableView.reloadData()
+    }
 }
 
 // MARK: - View Protocol

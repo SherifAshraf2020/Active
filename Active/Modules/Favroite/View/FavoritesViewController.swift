@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FavoritesViewProtocol {
 
     // MARK: - Outlets
@@ -46,19 +47,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
         
-        // Mock Data for testing
-        if CoreDataManager.shared.fetchFavorites().isEmpty && CoreDataManager.shared.fetchFavoriteTeams().isEmpty {
-                    
-                    CoreDataManager.shared.saveLeague(key: "1", name: "Premier League", logo: "premier_logo", sport: "Football")
-                    CoreDataManager.shared.saveLeague(key: "2", name: "La Liga", logo: "laliga_logo", sport: "Football")
-                    CoreDataManager.shared.saveLeague(key: "3", name: "Champions League", logo: "ucl_logo", sport: "Football")
-                    
-                    CoreDataManager.shared.saveTeam(key: 101, name: "Real Madrid", logo: "madrid_logo", sport: "Football")
-                    CoreDataManager.shared.saveTeam(key: 102, name: "Liverpool", logo: "lfc_logo", sport: "Football")
-                    CoreDataManager.shared.saveTeam(key: 103, name: "Al Ahly SC", logo: "ahly_logo", sport: "Football")
-                    
-                    print("✅ Static Mock Data added successfully!")
-                }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -125,7 +113,37 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             let league = favoriteLeagues[indexPath.row]
             cell.leagueName?.text = league.league_name
             cell.deleteHandler = { [weak self] in
-                self?.presenter.deleteLeague(league: league)
+
+                guard let self = self else {
+                    return
+                }
+
+                let alert = UIAlertController(
+                    title: "Remove Favorite",
+                    message: "Are you sure you want to remove this league from favorites?",
+                    preferredStyle: .alert
+                )
+
+                alert.addAction(
+                    UIAlertAction(
+                        title: "Cancel",
+                        style: .cancel
+                    )
+                )
+
+                alert.addAction(
+                    UIAlertAction(
+                        title: "Delete",
+                        style: .destructive
+                    ) { _ in
+
+                        self.presenter.deleteLeague(
+                            league: league
+                        )
+                    }
+                )
+
+                self.present(alert, animated: true)
             }
         } else {
             let team = favoriteTeams[indexPath.row]
