@@ -16,6 +16,15 @@ protocol LeaguesPresenterProtocol {
     func getLeaguesCount() -> Int
 
     func getLeague(at index: Int) -> LeagueModel
+    
+    func toggleFavorite(
+        league: LeagueModel,
+        sport: String
+    )
+
+    func isFavorite(
+        league: LeagueModel
+    ) -> Bool
 }
 
 class LeaguesPresenter: LeaguesPresenterProtocol {
@@ -61,7 +70,7 @@ class LeaguesPresenter: LeaguesPresenterProtocol {
             }
         }
     }
-
+    
     func getLeaguesCount() -> Int {
 
         return leagues.count
@@ -70,5 +79,41 @@ class LeaguesPresenter: LeaguesPresenterProtocol {
     func getLeague(at index: Int) -> LeagueModel {
 
         return leagues[index]
+    }
+    
+    func toggleFavorite(
+        league: LeagueModel,
+        sport: String
+    ) {
+
+        let key = "\(league.leagueKey ?? 0)"
+
+        if CoreDataManager.shared.isLeagueFavorite(
+            key: key
+        ) {
+
+            CoreDataManager.shared.deleteLeague(
+                       by: key
+                   )
+
+        } else {
+
+            CoreDataManager.shared.saveLeague(
+                key: key,
+                name: league.leagueName ?? "",
+                logo: league.leagueLogo ?? "",
+                sport: sport
+            )
+        }
+    }
+    func isFavorite(
+        league: LeagueModel
+    ) -> Bool {
+
+        let key = "\(league.leagueKey ?? 0)"
+
+        return CoreDataManager.shared.isLeagueFavorite(
+            key: key
+        )
     }
 }

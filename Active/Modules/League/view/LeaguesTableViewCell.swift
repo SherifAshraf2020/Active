@@ -21,22 +21,6 @@ class LeaguesTableViewCell: UITableViewCell {
     }
   
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
-        func configureFavoriteButton(
-            isFavorite: Bool
-        ) {
-
-            self.isFavorite = isFavorite
-
-            let imageName =
-            isFavorite ? "heart.fill" : "heart"
-
-            favoriteButton.setImage(
-                UIImage(systemName: imageName),
-                for: .normal
-            )
-
-            favoriteButton.tintColor = .systemRed
-        }
         favoriteButtonAction?()
     }
     override func layoutSubviews() {
@@ -47,11 +31,16 @@ class LeaguesTableViewCell: UITableViewCell {
 
           leagueImageView.clipsToBounds = true
       }
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    override func setSelected(
+           _ selected: Bool,
+           animated: Bool
+       ) {
 
-        // Configure the view for the selected state
-    }
+           super.setSelected(
+               selected,
+               animated: animated
+           )
+       }
     func configureFavoriteButton(
         isFavorite: Bool
     ) {

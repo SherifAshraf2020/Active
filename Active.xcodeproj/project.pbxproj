@@ -343,7 +343,6 @@
 			isa = PBXGroup;
 			children = (
 				6F28C8BC2FB0B72E00700E38 /* LeagueDetailsPresenter.swift */,
-				6F28C8C22FB0BCB400700E38 /* CustomCells.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -351,6 +350,7 @@
 		BFB057E82FB3BF440016716A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6F28C8C22FB0BCB400700E38 /* CustomCells.swift */,
 				6F28C8BA2FB0B42B00700E38 /* LeagueDetailsViewController.swift */,
 			);
 			path = View;

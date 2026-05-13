@@ -119,25 +119,54 @@ extension LeaguesTableViewController {
             for: indexPath
         ) as! LeaguesTableViewCell
 
-        let league =
-        presenter?.getLeague(at: indexPath.row)
+        guard let league =
+                presenter?.getLeague(at: indexPath.row)
+        else {
+            return cell
+        }
+
+        // MARK: - League Name
 
         cell.leagueNameLabel.text =
-        league?.leagueName
-        
-        cell.favoriteButtonAction = {
+        league.leagueName
 
-            guard let league = league else {
-                return
-            }
+        // MARK: - League Image
 
-            print("Add \(league.leagueName ?? "") To Favorites")
-        }
-        if let imageString = league?.leagueLogo,
+        if let imageString = league.leagueLogo,
            let url = URL(string: imageString) {
 
             cell.leagueImageView.kf.setImage(
                 with: url
+            )
+        }
+
+        // MARK: - Favorite Button State
+
+        let isFavorite =
+        presenter?.isFavorite(
+            league: league
+        ) ?? false
+
+        cell.configureFavoriteButton(
+            isFavorite: isFavorite
+        )
+
+        // MARK: - Favorite Action
+
+        cell.favoriteButtonAction = { [weak self] in
+
+            guard let self = self else {
+                return
+            }
+
+            self.presenter?.toggleFavorite(
+                league: league,
+                sport: self.selectedSport ?? ""
+            )
+
+            tableView.reloadRows(
+                at: [indexPath],
+                with: .automatic
             )
         }
 
