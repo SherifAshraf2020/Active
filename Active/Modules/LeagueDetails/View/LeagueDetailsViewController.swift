@@ -528,20 +528,38 @@ UICollectionViewDelegate {
         // MARK: Teams
             
         case .teams:
-            
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "TeamCell",
                 for: indexPath
             ) as! TeamCell
             
-            let team = presenter.getTeam(
-                at: indexPath.row
-            )
+            let team = presenter.getTeam(at: indexPath.row)
+            let teamKey = Int64(team.team_key ?? 0)
             
-            cell.configure(team: team)
+            let favoriteTeams = CoreDataManager.shared.fetchFavoriteTeams()
+            let favoriteEntity = favoriteTeams.first(where: { $0.team_key == teamKey })
+            let isFavorite = favoriteEntity != nil
+            
+            cell.configure(team: team, isFav: isFavorite)
+            
+            cell.onFavoriteTapped = { [weak self] in
+                guard let self = self else { return }
+                
+                if let entityToDelete = favoriteEntity {
+                    CoreDataManager.shared.deleteTeam(team: entityToDelete)
+                } else {
+                    CoreDataManager.shared.saveTeam(
+                        key: teamKey,
+                        name: team.team_name ?? "",
+                        logo: team.team_logo ?? "",
+                        sport: "Football"
+                    )
+                }
+                
+                self.collectionView.reloadItems(at: [indexPath])
+            }
             
             return cell
-            
             
         default:
             return UICollectionViewCell()

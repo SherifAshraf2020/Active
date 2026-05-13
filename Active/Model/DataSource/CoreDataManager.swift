@@ -109,6 +109,17 @@ class CoreDataManager {
             context.delete(team)
             saveContext()
         }
+    
+    func isTeamFavorite(key: Int64) -> Bool {
+        let request: NSFetchRequest<TeamEntity> = TeamEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "team_key == %lld", key)
+        do {
+            let result = try context.fetch(request)
+            return !result.isEmpty
+        } catch {
+            return false
+        }
+    }
         
 
    // MARK: - Save Context
