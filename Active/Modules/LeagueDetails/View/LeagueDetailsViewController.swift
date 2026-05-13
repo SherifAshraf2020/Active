@@ -38,6 +38,8 @@ class LeagueDetailsViewController: UIViewController {
     
     let indicator = UIActivityIndicatorView(style: .large)
     
+    private var isLoading = false
+    
     private let emptyLabel: UILabel = {
 
         let label = UILabel()
@@ -61,6 +63,7 @@ class LeagueDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = league?.leagueName ?? "League Details"
 
         presenter = LeagueDetailsPresenter(
             view: self,
@@ -69,6 +72,8 @@ class LeagueDetailsViewController: UIViewController {
         
         setupCollectionView()
         setupFavoriteButton()
+        view.backgroundColor = UIColor.systemGroupedBackground
+        collectionView.backgroundColor = UIColor.systemGroupedBackground
         
         presenter.viewDidLoad()
         view.addSubview(emptyLabel)
@@ -119,6 +124,11 @@ extension LeagueDetailsViewController {
         collectionView.register(
             TeamCell.self,
             forCellWithReuseIdentifier: "TeamCell"
+        )
+        collectionView.register(
+            SectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeaderView.identifier
         )
     }
     
@@ -210,7 +220,6 @@ extension LeagueDetailsViewController {
         )
     }
 
-
     // MARK: - Favorite Action
 
     @objc private func favoriteButtonTapped() {
@@ -219,24 +228,24 @@ extension LeagueDetailsViewController {
             return
         }
 
-        let isFavorite =
-        presenter.isFavorite(
-            league: league
-        )
-
-        presenter.toggleFavorite(
+        let addedToFavorite = presenter.toggleFavorite(
             league: league
         )
 
         updateFavoriteButton()
 
+        let title =
+        addedToFavorite
+        ? "Added To Favorites"
+        : "Removed From Favorites"
+
         let message =
-        isFavorite
-        ? "League Removed Successfully"
-        : "League Added Successfully"
+        addedToFavorite
+        ? "League added successfully."
+        : "League removed successfully."
 
         let alert = UIAlertController(
-            title: "Favorites",
+            title: title,
             message: message,
             preferredStyle: .alert
         )
@@ -309,8 +318,8 @@ extension LeagueDetailsViewController {
         )
 
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(320),
-            heightDimension: .absolute(240)
+            widthDimension: .absolute(250),
+            heightDimension: .absolute(190)
         )
 
         let group = NSCollectionLayoutGroup.horizontal(
@@ -325,11 +334,23 @@ extension LeagueDetailsViewController {
         section.orthogonalScrollingBehavior = .continuous
 
         section.contentInsets = NSDirectionalEdgeInsets(
-            top: 16,
+            top: 8,
             leading: 16,
-            bottom: 20,
+            bottom: 16,
             trailing: 16
         )
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(44)
+        )
+
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+
+        section.boundarySupplementaryItems = [header]
 
         return section
     }
@@ -361,7 +382,7 @@ extension LeagueDetailsViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(280)
+            heightDimension: .absolute(150)
         )
 
         let group = NSCollectionLayoutGroup.horizontal(
@@ -372,13 +393,25 @@ extension LeagueDetailsViewController {
         let section = NSCollectionLayoutSection(
             group: group
         )
-
+//        section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = NSDirectionalEdgeInsets(
             top: 16,
             leading: 16,
             bottom: 20,
             trailing: 16
         )
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(44)
+        )
+
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+
+        section.boundarySupplementaryItems = [header]
 
         return section
     }
@@ -430,6 +463,18 @@ extension LeagueDetailsViewController {
             bottom: 20,
             trailing: 16
         )
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(44)
+        )
+
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+
+        section.boundarySupplementaryItems = [header]
 
         return section
     }
@@ -447,7 +492,18 @@ UICollectionViewDelegate {
         in collectionView: UICollectionView
     ) -> Int {
         
-        return Section.allCases.count
+        if isLoading {
+                return 0
+            }
+
+            let totalItems =
+            presenter.getUpcomingCount() +
+            presenter.getLatestCount() +
+            presenter.getTeamsCount()
+
+            return totalItems == 0
+            ? 0
+            : Section.allCases.count
     }
     
     
@@ -607,6 +663,32 @@ UICollectionViewDelegate {
             break
         }
     }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+
+        let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: SectionHeaderView.identifier,
+            for: indexPath
+        ) as! SectionHeaderView
+
+        switch Section(rawValue: indexPath.section)! {
+
+        case .upcoming:
+            header.titleLabel.text = "Upcoming Matches"
+
+        case .latest:
+            header.titleLabel.text = "Latest Results"
+
+        case .teams:
+            header.titleLabel.text = "Teams"
+        }
+
+        return header
+    }
 }
 
 
@@ -615,18 +697,25 @@ UICollectionViewDelegate {
 extension LeagueDetailsViewController:
 LeagueDetailsViewProtocol {
     func startLoading() {
-        
+        isLoading = true
+
+        collectionView.reloadData()
+
         indicator.center = view.center
-        
+
         view.addSubview(indicator)
-        
+
         indicator.startAnimating()
     }
     
     func stopLoading() {
         
+        isLoading = false
+
+        collectionView.reloadData()
+
         indicator.stopAnimating()
-        
+
         indicator.removeFromSuperview()
     }
     
