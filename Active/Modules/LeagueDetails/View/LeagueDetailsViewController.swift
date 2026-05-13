@@ -561,6 +561,11 @@ UICollectionViewDelegate {
         switch section {
             
         case .teams:
+            if !NetworkMonitor.shared.checkConnection() {
+                        self.showError(message: "Internet connection is required to view team details and players.")
+                        return
+                    }
+            
             let team = presenter.getTeam(at: indexPath.row)
 
                 let storyboard = UIStoryboard(
@@ -625,21 +630,25 @@ LeagueDetailsViewProtocol {
     
     
     func showError(message: String) {
-        
-        let alert = UIAlertController(
-            title: "Error",
-            message: message,
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(
-            UIAlertAction(
-                title: "OK",
-                style: .default
-            )
-        )
-        
-        present(alert, animated: true)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Connection Error", message: message, preferredStyle: .alert)
+            
+            let retry = UIAlertAction(title: "Retry", style: .default) { [weak self] _ in
+                self?.presenter.viewDidLoad()
+            }
+            
+            let ok = UIAlertAction(title: "OK", style: .cancel)
+            
+            alert.addAction(retry)
+            alert.addAction(ok)
+            self.present(alert, animated: true)
+            
+            if self.presenter.getUpcomingCount() == 0 &&
+               self.presenter.getLatestCount() == 0 &&
+               self.presenter.getTeamsCount() == 0 {
+                self.emptyLabel.isHidden = false
+            }
+        }
     }
 }
 
