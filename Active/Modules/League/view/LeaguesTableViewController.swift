@@ -207,6 +207,9 @@ extension LeaguesTableViewController {
         detailsVC.leagueID =
         selectedLeague.leagueKey ?? 0
 
+        detailsVC.league =
+        selectedLeague
+
         
         navigationController?.pushViewController(
             detailsVC,

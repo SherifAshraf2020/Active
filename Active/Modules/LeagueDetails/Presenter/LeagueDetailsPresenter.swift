@@ -22,6 +22,14 @@ protocol LeagueDetailsPresenterProtocol {
     func getLatestEvent(at index: Int) -> Event
 
     func getTeam(at index: Int) -> Team
+    
+    func toggleFavorite(
+        league: LeagueModel
+    )
+
+    func isFavorite(
+        league: LeagueModel
+    ) -> Bool
 }
 
 class LeagueDetailsPresenter: LeagueDetailsPresenterProtocol {
@@ -266,5 +274,68 @@ extension LeagueDetailsPresenter {
     ) -> Team {
 
         return teams[index]
+    }
+}
+extension LeagueDetailsPresenter{
+    func isFavorite(
+        league: LeagueModel
+    ) -> Bool {
+
+        let key =
+        "\(league.leagueKey ?? 0)"
+
+        return CoreDataManager.shared
+            .isLeagueFavorite(key: key)
+    }
+    func toggleFavorite(
+        league: LeagueModel
+    ) {
+
+        let key =
+        "\(league.leagueKey ?? 0)"
+
+        // REMOVE
+
+        if CoreDataManager.shared
+            .isLeagueFavorite(key: key) {
+
+            CoreDataManager.shared.deleteLeague(
+                by: key
+            )
+
+            return
+        }
+
+        // SAVE
+
+        guard let imageUrl =
+                league.leagueLogo,
+              let url = URL(string: imageUrl)
+        else {
+            return
+        }
+
+        URLSession.shared.dataTask(
+            with: url
+        ) { data, _, error in
+
+            if let error = error {
+
+                print(error.localizedDescription)
+
+                return
+            }
+
+            DispatchQueue.main.async {
+
+                CoreDataManager.shared.saveLeague(
+                    key: key,
+                    name: league.leagueName ?? "",
+                    logo: league.leagueLogo ?? "",
+                    sport: ""
+                )
+            }
+
+        }.resume()
     }
 }
