@@ -31,7 +31,15 @@ class FavoritesPresenter {
     }
     
     func deleteLeague(league: League) {
-        CoreDataManager.shared.deleteLeague(league: league)
+
+        guard let key = league.league_key else {
+            return
+        }
+
+        CoreDataManager.shared.deleteLeague(
+            by: key
+        )
+
         getFavorites()
     }
 

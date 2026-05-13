@@ -26,7 +26,7 @@ class CoreDataManager {
     
     func saveLeague(key: String, name: String, logo: String, sport: String) {
             let league = League(context: context)
-            
+            league.league_key = key
             league.league_name = name
             league.league_logo = logo
             league.sport_type = sport
@@ -34,9 +34,51 @@ class CoreDataManager {
         saveContext()
     }
     
-    func deleteLeague(league: League) {
-        context.delete(league)
-        saveContext()
+    func deleteLeague(by key: String) {
+
+        let request: NSFetchRequest<League> =
+        League.fetchRequest()
+
+        request.predicate =
+        NSPredicate(format: "league_key == %@", key)
+
+        do {
+
+            let result = try context.fetch(request)
+
+            if let league = result.first {
+
+                context.delete(league)
+
+                saveContext()
+            }
+
+        } catch {
+
+            print(error.localizedDescription)
+        }
+    }
+    
+    func isLeagueFavorite(key: String) -> Bool {
+
+        let request: NSFetchRequest<League> =
+        League.fetchRequest()
+
+        request.predicate =
+        NSPredicate(format: "league_key == %@", key)
+
+        do {
+
+            let result = try context.fetch(request)
+
+            return !result.isEmpty
+
+        } catch {
+
+            print(error.localizedDescription)
+
+            return false
+        }
     }
     
 
