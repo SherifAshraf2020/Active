@@ -154,4 +154,57 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         return cell
     }
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+
+        // CHECK INTERNET
+
+        if !NetworkMonitor.shared.checkConnection() {
+
+            let alert = UIAlertController(
+                title: "No Internet",
+                message: "Internet connection is required to open league details.",
+                preferredStyle: .alert
+            )
+
+            alert.addAction(
+                UIAlertAction(
+                    title: "OK",
+                    style: .default
+                )
+            )
+
+            present(alert, animated: true)
+
+            return
+        }
+
+        // OPEN DETAILS
+
+        if isLeagueView {
+
+            let league =
+            favoriteLeagues[indexPath.row]
+
+            let storyboard = UIStoryboard(
+                name: "Main",
+                bundle: nil
+            )
+
+            let detailsVC =
+            storyboard.instantiateViewController(
+                withIdentifier: "LeagueDetailsViewController"
+            ) as! LeagueDetailsViewController
+
+            detailsVC.leagueID =
+            Int(league.league_key ?? "") ?? 0
+
+            navigationController?.pushViewController(
+                detailsVC,
+                animated: true
+            )
+        }
+    }
 }
