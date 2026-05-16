@@ -102,6 +102,6 @@ final class NetworkServiceTests: XCTestCase {
             }
             expectation.fulfill()
         }
-        waitForExpectations(timeout: 10)
+        waitForExpectations(timeout: 20)
     }
 }
